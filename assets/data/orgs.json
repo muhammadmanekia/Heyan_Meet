@@ -1,0 +1,45 @@
+[
+  {
+    "id": 1,
+    "details": {
+      "image": "https://scontent-dfw5-2.xx.fbcdn.net/v/t1.6435-9/87283917_3061911917186361_4212084335676751872_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=Si9JuqmdMkUAX9nseNl&_nc_ht=scontent-dfw5-2.xx&oh=00_AfBGDq4DZgG61fPG_edlal1UB34oQAqp1oW8HtHgJuTiGg&oe=639293D5https://scontent-dfw5-2.xx.fbcdn.net/v/t1.6435-9/87283917_3061911917186361_4212084335676751872_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=Si9JuqmdMkUAX9nseNl&_nc_ht=scontent-dfw5-2.xx&oh=00_AfBGDq4DZgG61fPG_edlal1UB34oQAqp1oW8HtHgJuTiGg&oe=639293D5",
+      "title": "Momin Center"
+    }
+  },
+  {
+    "id": 2,
+
+    "details": {
+      "image": "https://cfkdfw.org/wp-content/uploads/2021/07/Screen-Shot-2020-03-17-at-9.00.05-PM.png",
+      "title": "City of Knowledge"
+    }
+  },
+  {
+    "id": 3,
+    "details": {
+      "image": "https://pbs.twimg.com/profile_images/806657726717669376/vQdY_SKS_400x400.jpg",
+      "title": "IILM Center"
+    }
+  },
+  {
+    "id": 4,
+    "details": {
+      "image": "https://pbs.twimg.com/profile_images/1368330317082341379/cwTbmyIJ_400x400.jpg",
+      "title": "Ahlul Bayt Student Organization UTD"
+    }
+  },
+  {
+    "id": 5,
+    "details": {
+      "image": "https://i1.sndcdn.com/avatars-8xuL79HMYgiQGo7c-4jpEOg-t500x500.jpg",
+      "title": "Anjuman e Sarkar e Wafa (AS)"
+    }
+  },
+  {
+    "id": 6,
+    "details": {
+      "image": "https://yt3.ggpht.com/L51iriNrTJovmlnqIuN-611ICJHSXw3iGOHm5K0EqnMOa9dVb_3O20PsJnN4KhZmcpleIXWRoA=s900-c-k-c0x00ffffff-no-rj",
+      "title": "Anjuman e Sher e Khuda (AS)"
+    }
+  }
+]

@@ -1,0 +1,46 @@
+type RSVP @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  numberOfAttendees: Int
+  userID: ID! @index(name: "byUser")
+  eventID: ID! @index(name: "byEvent")
+  comments: String
+  paidAmount: Float
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  RSVPS: [RSVP] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+type Event @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String!
+  description: String
+  zipcode: String
+  email: AWSEmail
+  phone: AWSPhone
+  url: AWSURL
+  startDateTime: AWSDateTime!
+  endDateTime: AWSDateTime!
+  streetAddress: String
+  city: String
+  state: String
+  country: String
+  banner: AWSURL
+  organizationID: ID! @index(name: "byOrganization")
+  RSVPS: [RSVP] @hasMany(indexName: "byEvent", fields: ["id"])
+  createdBy: String
+  createdOn: AWSDateTime
+  needRsvp: Boolean!
+  isActive: Boolean!
+  paymentAmount: Float
+}
+
+type Organization @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  email: AWSEmail
+  url: AWSURL
+  phone: AWSPhone
+  Events: [Event] @hasMany(indexName: "byOrganization", fields: ["id"])
+}
