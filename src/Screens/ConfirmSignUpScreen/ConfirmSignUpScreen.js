@@ -24,8 +24,11 @@ function ConfirmSignUpScreen() {
     setLoading(true);
     try {
       const response = await Auth.confirmSignUp(data.username, data.code);
+      await Auth.signIn({
+        username: formValues.email,
+        password: formValues.password,
+      });
       console.log('Response', response);
-      navigation.navigate('Organizations');
     } catch (e) {
       console.log('Error Signing In: ', e.message);
     }

@@ -5,33 +5,67 @@ import {
   TextInput,
   StyleSheet,
   Image,
+  Switch,
 } from 'react-native';
 import React, {useState, useCallback, useMemo} from 'react';
-import DatePicker from 'react-native-date-picker';
 import * as ImagePicker from 'react-native-image-picker';
 import {Formik, useFormik, useFormikContext} from 'formik';
+import EventDetails from '../../Components/FormPage/EventDetails';
+import RSVPDetails from '../../Components/FormPage/RSVPDetails';
+import {useNavigation} from '@react-navigation/core';
+import {API, graphqlOperation} from 'aws-amplify';
+import {createEvent} from '../../graphql/mutations';
+import {useRoute} from '@react-navigation/core';
 
 const CreateEventsScreen = () => {
   const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
+  const [screenCount, setScreenCount] = useState(1);
   const [data, setData] = useState({
     title: '',
-    dateTime: '',
-    location: '',
+    startDateTime: '',
+    streetAddress: '',
     description: '',
-    uri: '',
+    url: '',
+    paymentAmount: '',
   });
+
+  const navigation = useNavigation();
+  const route = useRoute();
+  const {user} = route.params;
 
   const formikProps = useFormik({
     initialValues: {
       title: '',
-      dateTime: '',
-      location: '',
+      startDateTime: '',
+      streetAddress: '',
       description: '',
-      uri: '',
+      url: '',
+      paymentAmount: '',
+      // zipcode: '12345',
+      // email: 'test@test.com',
+      // phone: '7324295791',
+      // endDateTime: '1997-07-16T19:20:30.45+01:00',
+      // city: 'I',
+      // state: 'I',
+      // country: 'I',
+      // banner: 'https://www.google.com',
+      // createdOn: '2020-03-12',
+      // createdBy: 'Test',
+      // needRsvp: true,
+      // isActive: true,
+      organizationID: user.sub,
+      // RSVPS: [],
     },
-    onSubmit: values => {
+    onSubmit: async values => {
       setData(values);
+      values.paymentAmount = values.paymentAmount ? +values.paymentAmount : 0;
+      console.log(data);
+      try {
+        await API.graphql(graphqlOperation(createEvent, {input: values}));
+      } catch (e) {
+        console.error(e);
+      }
+      navigation.navigate('AdminHome');
     },
   });
 
@@ -42,67 +76,25 @@ const CreateEventsScreen = () => {
       includeBase64: false,
     };
     const uri = await ImagePicker.launchImageLibrary(options);
-    formikProps.setFieldValue('uri', uri.assets[0].uri);
+    formikProps.setFieldValue('url', uri.assets[0].uri);
   }, []);
+
+  console.log('DATA', data);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Create An Event</Text>
-      <View style={styles.form}>
-        <Text style={styles.formTitle}>Event Title</Text>
-        <TextInput
-          style={styles.input}
-          fontSize={12}
-          value={formikProps.values.title}
-          onChangeText={formikProps.handleChange('title')}
-        />
-        <Text style={styles.formTitle}>Event Date & Time</Text>
-        <Pressable style={styles.calendarButton} onPress={() => setOpen(true)}>
-          <Image
-            style={styles.icon}
-            source={{
-              uri: 'https://cdn-icons-png.flaticon.com/512/833/833593.png',
-            }}
-          />
-        </Pressable>
-        <DatePicker
-          modal
-          open={open}
+      {screenCount == 1 ? (
+        <EventDetails
+          formikProps={formikProps}
+          onImageLibraryPress={onImageLibraryPress}
           date={date}
-          onConfirm={date => {
-            setOpen(false);
-            formikProps.setFieldValue('dateTime', date);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
+          screenCount={screenCount}
+          setScreenCount={setScreenCount}
         />
-        <Text style={styles.formTitle}>Event Location</Text>
-        <TextInput
-          multiline
-          style={styles.input}
-          fontSize={12}
-          placeholder="Please add a location that can be searched in maps"
-          onChangeText={formikProps.handleChange('location')}
-          value={formikProps.values.location}
-        />
-        <Text style={styles.formTitle}>Description</Text>
-        <TextInput
-          style={styles.descriptionInput}
-          fontSize={12}
-          numberOfLines={4}
-          multiline
-          value={formikProps.values.description}
-          onChangeText={formikProps.handleChange('description')}
-        />
-        <Text style={styles.formTitle}>Add Images</Text>
-        <Pressable onPress={onImageLibraryPress} style={styles.button}>
-          <Text style={styles.buttonText}>Select Image From File</Text>
-        </Pressable>
-      </View>
-      <Pressable onPress={formikProps.handleSubmit} style={styles.submit}>
-        <Text style={styles.submitText}>Submit</Text>
-      </Pressable>
+      ) : (
+        <RSVPDetails formikProps={formikProps} />
+      )}
     </View>
   );
 };
@@ -112,6 +104,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   form: {
     margin: 8,
@@ -123,6 +117,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     margin: 10,
     padding: 2,
+    backgroundColor: '#E4E2E2',
   },
   descriptionInput: {
     borderWidth: StyleSheet.hairlineWidth,
@@ -139,6 +134,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    fontWeight: 'bold',
+    margin: 10,
   },
   formTitle: {
     fontSize: 16,

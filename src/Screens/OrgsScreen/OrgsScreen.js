@@ -3,10 +3,18 @@ import React from 'react';
 import orgs from '../../../assets/data/orgs.json';
 import OrgListItem from '../../Components/OrgListItem/OrgListItem';
 import {useNavigation} from '@react-navigation/core';
-import {Auth} from 'aws-amplify';
+import {Auth, API, graphqlOperation} from 'aws-amplify';
 
 const OrgsScreen = () => {
   const navigation = useNavigation();
+  useEffect(() => {
+    API.graphql(graphqlOperation());
+
+    return () => {
+      second;
+    };
+  }, [third]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Organizations</Text>
@@ -28,9 +36,6 @@ const OrgsScreen = () => {
         style={styles.searchContainer}
         onPress={() => navigation.navigate('SearchScreen')}
       />
-      <Pressable style={styles.searchContainer} onPress={() => Auth.signOut()}>
-        <Text>Sign Out</Text>
-      </Pressable>
     </View>
   );
 };

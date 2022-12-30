@@ -1,15 +1,26 @@
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import EventsScreen from '../EventsScreen/EventsScreen';
 import {useNavigation} from '@react-navigation/core';
+import {Auth} from 'aws-amplify';
 
 const AdminEventsScreen = () => {
   const navigation = useNavigation();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  function getUser() {
+    Auth.currentAuthenticatedUser({bypassCache: true}).then(user => {
+      setUser(user.attributes);
+    });
+  }
   return (
     <View style={styles.container}>
-      <Text style={styles.orgTitle}>Momin Center</Text>
+      <Text style={styles.orgTitle}>{user && user.name} </Text>
       <Pressable
-        onPress={() => navigation.navigate('CreateEvent')}
+        onPress={() => navigation.navigate('CreateEvent', {user: user})}
         style={styles.createEvent}>
         <Text style={styles.buttonText}>Create An Event</Text>
       </Pressable>
@@ -31,7 +42,7 @@ const styles = StyleSheet.create({
   createEvent: {
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: '#3bc14a',
+    backgroundColor: 'black',
     width: 150,
     height: 30,
     justifyContent: 'center',

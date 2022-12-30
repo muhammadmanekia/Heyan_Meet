@@ -1,20 +1,19 @@
 {
-  "staging": {
+  "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-heyanmeet-staging-203220-authRole",
-      "UnauthRoleArn": "arn:aws:iam::613662591631:role/amplify-heyanmeet-staging-203220-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::613662591631:role/amplify-heyanmeet-staging-203220-authRole",
-      "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-heyanmeet-staging-203220-deployment",
-      "UnauthRoleName": "amplify-heyanmeet-staging-203220-unauthRole",
-      "StackName": "amplify-heyanmeet-staging-203220",
-      "StackId": "arn:aws:cloudformation:us-east-2:613662591631:stack/amplify-heyanmeet-staging-203220/73852cd0-5aed-11ed-8b6b-0ad28260e042",
-      "AmplifyAppId": "d3v7mxbp7kdyz1"
+      "AuthRoleName": "amplify-heyanmeet-dev-130937-authRole",
+      "UnauthRoleArn": "arn:aws:iam::613662591631:role/amplify-heyanmeet-dev-130937-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::613662591631:role/amplify-heyanmeet-dev-130937-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-heyanmeet-dev-130937-deployment",
+      "UnauthRoleName": "amplify-heyanmeet-dev-130937-unauthRole",
+      "StackName": "amplify-heyanmeet-dev-130937",
+      "StackId": "arn:aws:cloudformation:us-east-1:613662591631:stack/amplify-heyanmeet-dev-130937/d9cf3360-8099-11ed-94fc-1234973eb8a7",
+      "AmplifyAppId": "dwc0gxuzyacf8"
     },
     "categories": {
       "auth": {
-        "HeyanMeet": {},
-        "heyanmeetf8e1d3c4": {}
+        "HeyanMeet": {}
       }
     }
   }

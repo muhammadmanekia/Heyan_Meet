@@ -3,7 +3,7 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "heyanmff95fa2a",
+    "resourceNameTruncated": "heyanmd2d71fe8",
     "userPoolName": "HeyanMeet",
     "autoVerifiedAttributes": [
       "email"
@@ -15,9 +15,9 @@
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Heyan Meet Verification Code",
-    "emailVerificationMessage": "Please use this code: {####} to verify your account on Heyan Meet. Thanks",
+    "emailVerificationMessage": "Heyan Meet Verification Code: {####}",
     "defaultPasswordPolicy": false,
-    "passwordPolicyMinLength": 8,
+    "passwordPolicyMinLength": 6,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
       "email",
@@ -30,9 +30,9 @@
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "HeyanMff95fa2a_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "HeyanMd2d71fe8_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "ff95fa2a",
+    "sharedId": "d2d71fe8",
     "resourceName": "HeyanMeet",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
@@ -43,6 +43,21 @@
     "thirdPartyAuth": false,
     "authProviders": [],
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": [],
+    "hostedUI": false
   }
-} 
+}

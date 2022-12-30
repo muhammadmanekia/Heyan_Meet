@@ -8,8 +8,15 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/core';
+import {API, graphqlOperation} from 'aws-amplify';
+import {deleteEvent} from '../../graphql/mutations';
+import {useRoute} from '@react-navigation/core';
 
 const AdminEventInfo = () => {
+  const route = useRoute();
+
+  const {thisEvent} = route.params;
+  console.log(thisEvent);
   const navigation = useNavigation();
   var rsvpArrdemo = [
     'Ali',
@@ -63,14 +70,33 @@ const AdminEventInfo = () => {
     'Aden',
     'Adenn',
   ];
+
+  async function deleteEventHandler() {
+    try {
+      const response = await API.graphql(
+        graphqlOperation(deleteEvent, {
+          input: {_version: thisEvent._version, id: thisEvent.id},
+        }),
+      );
+      console.log('RESPONSE', response);
+      navigation.navigate('AdminHome');
+    } catch (e) {
+      console.log('Error Deleting Event: ', e);
+    }
+  }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Jumma Salaat</Text>
+      <Text style={styles.title}>{thisEvent.title}</Text>
       <View style={styles.previewContainer}>
         <Pressable
           onPress={() => navigation.navigate('EventDetails')}
           style={styles.previewButtonContainer}>
           <Text style={styles.previewButton}>Preview Event Ad</Text>
+        </Pressable>
+        <Pressable
+          onPress={deleteEventHandler}
+          style={styles.deleteButtonContainer}>
+          <Text style={styles.previewButton}>Delete Event</Text>
         </Pressable>
       </View>
       <View>
@@ -113,6 +139,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   previewContainer: {
+    flex: 1,
+    flexDirection: 'row',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'gray',
   },
@@ -127,6 +155,13 @@ const styles = StyleSheet.create({
   previewButton: {
     alignSelf: 'center',
     color: 'white',
+  },
+  deleteButtonContainer: {
+    backgroundColor: 'red',
+    padding: 10,
+    alignSelf: 'center',
+    borderRadius: 20,
+    margin: 20,
   },
   list: {
     height: '80%',

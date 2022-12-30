@@ -13,18 +13,19 @@ const EventsListItem = ({event, handleOnPress, showRSVP}) => {
   function handleRSVPPress() {
     handleOnPress(event);
   }
+  console.log('EVENT', event.title);
   return (
     <View>
       <View style={styles.container}>
         <ImageBackground
-          source={{uri: event.details.image}}
+          source={{uri: event.image}}
           style={styles.image}
           imageStyle={{
             borderRadius: 30,
             resizeMode: 'cover',
           }}>
           <View style={styles.description}>
-            <Text style={styles.title}>{event.details.title}</Text>
+            <Text style={styles.title}>{event.title}</Text>
             <View style={styles.specs}>
               <View style={styles.address}>
                 <Image
@@ -33,7 +34,7 @@ const EventsListItem = ({event, handleOnPress, showRSVP}) => {
                   }}
                   style={styles.icon}
                 />
-                <Text style={styles.specsText}>{event.details.location}</Text>
+                <Text style={styles.specsText}>{event.streetAddress}</Text>
               </View>
               <View style={styles.date}>
                 <Image
@@ -43,7 +44,7 @@ const EventsListItem = ({event, handleOnPress, showRSVP}) => {
                   style={styles.icon}
                 />
                 <Text style={styles.specsText} numberOfLines={2}>
-                  {event.details.date}
+                  {event.date}
                 </Text>
               </View>
             </View>

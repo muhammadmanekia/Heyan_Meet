@@ -20,13 +20,13 @@ const ResetPasswordScreen = () => {
 
   const onResetPassword = async data => {
     const {username, code, password} = data;
-
+    console.log(data);
     try {
-      const response = await Auth.forgotPasswordSubmit({
+      const response = await Auth.forgotPasswordSubmit(
         username,
         code,
         password,
-      });
+      );
       console.log('Response', response);
       navigation.navigate('SignIn');
     } catch (e) {
