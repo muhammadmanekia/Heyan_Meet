@@ -5,16 +5,16 @@ const OrgListItem = ({org}) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoWrap}>
-        <Image
+        {/* <Image
           source={{
-            uri: org.details.image,
+            uri: org.url,
           }}
           style={styles.logo}
-        />
+        /> */}
       </View>
       <View style={styles.content}>
         <Text style={styles.title} numberOfLines={2}>
-          {org.details.title}
+          {org && org.name}
         </Text>
       </View>
     </View>

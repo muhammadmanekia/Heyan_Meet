@@ -1,4 +1,4 @@
-import {View, Text, ActivityIndicator} from 'react-native';
+import {View, Text, ActivityIndicator, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -10,10 +10,10 @@ import CreateEventsScreen from '../Screens/CreateEventsScreen/CreateEventsScreen
 import IosFonts from '../Components/Fonts';
 import AdminEventInfo from '../Screens/AdminEventInfo/AdminEventInfo';
 import {NavigationContainer, TabActions} from '@react-navigation/native';
-import SignInScreen from '../Screens/SignInScreen/SignInScreen';
-import SignUpScreen from '../Screens/SignUpScreen/SignUpScreen';
-import ResetPasswordScreen from '../Screens/ResetPasswordScreen/ResetPasswordScreen';
-import ConfirmSignUpScreen from '../Screens/ConfirmSignUpScreen/ConfirmSignUpScreen';
+import SignInScreen from '../Screens/AuthScreens/SignInScreen/SignInScreen';
+import SignUpScreen from '../Screens/AuthScreens/SignUpScreen/SignUpScreen';
+import ResetPasswordScreen from '../Screens/AuthScreens/ResetPasswordScreen/ResetPasswordScreen';
+import ConfirmSignUpScreen from '../Screens/AuthScreens/ConfirmSignUpScreen/ConfirmSignUpScreen';
 import SearchScreen from '../Screens/SearchScreen/SearchScreen';
 import {Auth, Hub} from 'aws-amplify';
 import SettingsScreen from '../Screens/SettingsScreen/SettingsScreen';
@@ -39,7 +39,6 @@ const Navigation = () => {
   useEffect(() => {
     const listener = data => {
       if (data.payload.event === 'signIn' || data.payload.event === 'signOut') {
-        console.log(data);
         checkUser();
       }
     };
@@ -58,7 +57,29 @@ const Navigation = () => {
 
   const BottomTabs = () => {
     return (
-      <Tab.Navigator screenOptions={{headerShown: false}}>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          headerShown: false,
+          tabBarIcon: () => {
+            var url;
+            if (route.name === 'organizations') {
+              url = 'https://cdn-icons-png.flaticon.com/512/681/681494.png';
+            } else if (route.name === 'Settings') {
+              url = 'https://cdn-icons-png.flaticon.com/512/2040/2040504.png';
+            } else {
+              url = 'https://cdn-icons-png.flaticon.com/512/25/25694.png';
+            }
+
+            return (
+              <Image
+                source={{
+                  uri: url,
+                }}
+                style={{width: 20, height: 20}}
+              />
+            );
+          },
+        })}>
         <Tab.Screen
           name={
             user.attributes.profile === 'user' ? 'organizations' : 'AdminHome'

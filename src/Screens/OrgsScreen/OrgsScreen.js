@@ -1,41 +1,80 @@
 import {View, Text, FlatList, StyleSheet, Pressable, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import orgs from '../../../assets/data/orgs.json';
 import OrgListItem from '../../Components/OrgListItem/OrgListItem';
 import {useNavigation} from '@react-navigation/core';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
+import {customSubscribes} from '../../graphql/customqueries';
+import {listSubscribes} from '../../graphql/queries';
+import {useIsFocused} from '@react-navigation/native';
 
 const OrgsScreen = () => {
   const navigation = useNavigation();
-  useEffect(() => {
-    API.graphql(graphqlOperation());
+  const [user, setUser] = useState();
+  const [subscribed, setSubscribed] = useState([]);
 
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    let checkAPISubscribed = true;
+    async function getUser() {
+      var subsArr = [];
+      if (checkAPISubscribed) {
+        const thisUser = await Auth.currentAuthenticatedUser({
+          bypassCache: true,
+        });
+        const _subscribed = await API.graphql(
+          graphqlOperation(listSubscribes, {
+            filter: {userID: {eq: thisUser.attributes.sub}},
+          }),
+        );
+        _subscribed?.data?.listSubscribes?.items.map(sub => {
+          if (sub._deleted != true) {
+            subsArr.push(sub);
+          }
+        });
+        setUser(thisUser);
+        setSubscribed(subsArr);
+      }
+    }
+    getUser();
     return () => {
-      second;
+      checkAPISubscribed = false;
     };
-  }, [third]);
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Organizations</Text>
       <FlatList
-        data={orgs}
+        data={subscribed}
         renderItem={({item}) => (
           <Pressable
             onPress={() =>
               navigation.navigate('Events', {
-                orgTitle: item.details.title,
+                orgTitle: item.Organization.name,
+                orgId: item.Organization.id,
                 showRSVP: true,
               })
             }>
-            <OrgListItem org={item} />
+            <OrgListItem org={item.Organization} />
           </Pressable>
         )}
       />
       <Pressable
         style={styles.searchContainer}
-        onPress={() => navigation.navigate('SearchScreen')}
-      />
+        onPress={() =>
+          navigation.navigate('SearchScreen', {
+            user: user.attributes,
+            subscribed: subscribed,
+          })
+        }>
+        <Image
+          source={{uri: 'https://cdn-icons-png.flaticon.com/512/54/54481.png'}}
+          style={styles.icon}
+        />
+        <Text>Search Organizations</Text>
+      </Pressable>
     </View>
   );
 };
@@ -49,12 +88,19 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   searchContainer: {
-    width: 50,
+    width: 200,
     height: 50,
-    backgroundColor: 'green',
+    backgroundColor: 'rgb(245, 245, 245)',
     marginBottom: 20,
     alignSelf: 'center',
     borderRadius: 25,
+    // shadowColor: '#000',
+    // shadowOffset: {width: 0, height: 1},
+    // shadowOpacity: 0.3,
+    // shadowRadius: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 
   icon: {
@@ -66,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginHorizontal: 20,
     marginBottom: 5,
-    fontFamily: 'Damascus',
+    fontFamily: 'Roboto',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },

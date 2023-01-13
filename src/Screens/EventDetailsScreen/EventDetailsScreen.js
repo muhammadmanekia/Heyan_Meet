@@ -2,13 +2,14 @@ import {View, Text, Image, StyleSheet, Pressable, Modal} from 'react-native';
 import React, {useState} from 'react';
 import RSVPModal from '../../Components/RSVPModal/RSVPModal';
 import {useRoute} from '@react-navigation/core';
+import {S3Image} from 'aws-amplify-react-native/dist/Storage';
 
 const EventDetailsScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const route = useRoute();
 
-  console.log(route.params);
+  const {thisEvent} = route.params;
 
   function handleOnPress() {
     requestAnimationFrame(() => {
@@ -17,9 +18,9 @@ const EventDetailsScreen = () => {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{route.params.thisevent.details.title}</Text>
-      <Image
-        source={{uri: route.params.thisevent.details.image}}
+      <Text style={styles.title}>{thisEvent.title}</Text>
+      <S3Image
+        imgKey={thisEvent.banner}
         style={styles.image}
         resizeMode="cover"
       />
@@ -31,7 +32,7 @@ const EventDetailsScreen = () => {
             }}
             style={styles.icon}
           />
-          <Text>{route.params.thisevent.details.location}</Text>
+          <Text>{thisEvent.streetAddress}</Text>
         </View>
         <View style={styles.info}>
           <Image
@@ -40,7 +41,10 @@ const EventDetailsScreen = () => {
             }}
             style={styles.icon}
           />
-          <Text>{route.params.thisevent.details.date}</Text>
+          <Text>
+            {new Date(thisEvent.startDateTime).toDateString()} ,{' '}
+            {new Date(thisEvent.startDateTime).toLocaleTimeString()}
+          </Text>
         </View>
         <View style={styles.buttonWrap}>
           <Pressable>
@@ -52,30 +56,10 @@ const EventDetailsScreen = () => {
       </View>
       <View style={styles.descriptionContainer}>
         <Text style={styles.descriptionTitle}>Description</Text>
-        <Text style={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </Text>
+        <Text style={styles.description}>{thisEvent.description}</Text>
       </View>
       <Modal transparent visible={modalVisible}>
-        <RSVPModal
-          handleOnPress={handleOnPress}
-          info={{
-            details: {
-              date: 'Nov 4 2022',
-              image: 'https://momin.org/news/uploads/JUmma%202022.jpeg',
-              location: 'Momin Center',
-              title: 'Jumma Salaat',
-            },
-            id: 1,
-            organization: 'Momin Center',
-          }}
-        />
+        <RSVPModal handleOnPress={handleOnPress} info={thisEvent} />
       </Modal>
     </View>
   );
@@ -84,20 +68,21 @@ const EventDetailsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    justifyContent: 'center',
+    // padding: 20,
+    // justifyContent: 'center',
     backgroundColor: 'white',
   },
   title: {
     fontSize: 24,
-    marginBottom: 10,
-    fontFamily: 'Damascus',
+    fontFamily: 'Roboto',
     fontWeight: 'bold',
     textTransform: 'uppercase',
+    marginHorizontal: 20,
+    marginTop: 20,
   },
   image: {
-    width: '100%',
-    height: 350,
+    aspectRatio: 1 / 1,
+    marginVertical: 10,
   },
   icon: {
     width: 20,
@@ -125,10 +110,10 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   buttonWrap: {
-    backgroundColor: '#3bc14a',
+    backgroundColor: '#000',
     width: 50,
     height: 50,
-    borderRadius: 25,
+    borderRadius: 15,
     position: 'absolute',
     left: '85%',
     top: '10%',

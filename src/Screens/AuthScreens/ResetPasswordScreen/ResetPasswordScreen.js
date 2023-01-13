@@ -54,7 +54,7 @@ const ResetPasswordScreen = () => {
         <SafeAreaView style={styles.container}>
           <View style={styles.headerTitle}>
             <Image
-              source={require('../../../assets/images/SignInLogo.png')}
+              source={require('../../../../assets/images/SignInLogo.png')}
               style={styles.logoFull}
             />
           </View>
@@ -120,6 +120,11 @@ const ResetPasswordScreen = () => {
                     {loading ? 'PLEASE WAIT...' : 'SEND CODE'}
                   </Text>
                 </Pressable>
+                <Pressable
+                  onPress={() => navigation.goBack()}
+                  style={styles.signUp}>
+                  <Text style={styles.secondary}>GO BACK TO SIGN IN</Text>
+                </Pressable>
               </View>
             </View>
           )}
@@ -131,7 +136,7 @@ const ResetPasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3BC14A',
+    backgroundColor: '#3DB589',
   },
   text: {
     margin: 10,
@@ -151,33 +156,30 @@ const styles = StyleSheet.create({
     fontFamily: 'PoiretOne-Regular',
     color: 'white',
   },
-  primary: {fontSize: 18, color: 'black'},
+  primary: {fontSize: 18, color: 'white'},
   secondary: {fontSize: 14, color: 'white', fontWeight: 'bold'},
   input: {
     height: 40,
     margin: 12,
-    borderWidth: 1,
-    borderBottomColor: 'white',
-    borderColor: 'transparent',
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,0.5)',
     borderRadius: 20,
     marginHorizontal: 25,
   },
   signIn: {
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     alignItems: 'center',
     width: 295,
     height: 50,
     justifyContent: 'center',
     borderRadius: 50,
-    shadowRadius: 8,
-    shadowOpacity: 0.5,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
+    // shadowRadius: 8,
+    // shadowOpacity: 0.5,
+    // shadowColor: '#000000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 5,
+    // },
   },
   logoFull: {
     width: 250,

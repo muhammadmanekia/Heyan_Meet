@@ -11,65 +11,39 @@ import {useNavigation} from '@react-navigation/core';
 import {API, graphqlOperation} from 'aws-amplify';
 import {deleteEvent} from '../../graphql/mutations';
 import {useRoute} from '@react-navigation/core';
+import {useEffect} from 'react';
+import {customRSVP} from '../../graphql/customqueries';
+import {useState} from 'react';
+import {listRSVPS} from '../../graphql/queries';
 
 const AdminEventInfo = () => {
   const route = useRoute();
 
+  const [rsvps, setRsvps] = useState([]);
   const {thisEvent} = route.params;
-  console.log(thisEvent);
   const navigation = useNavigation();
-  var rsvpArrdemo = [
-    'Ali',
-    'Aaran',
-    'Aaren',
-    'Aarez',
-    'Aarman',
-    'Aaron',
-    'Aaron-James',
-    'Aarron',
-    'Aaryan',
-    'Aaryn',
-    'Aayan',
-    'Aazaan',
-    'Abaan',
-    'Abbas',
-    'Abdallah',
-    'Abdalroof',
-    'Abdihakim',
-    'Abdirahman',
-    'Abdisalam',
-    'Abdul',
-    'Abdul-Aziz',
-    'Abdulbasir',
-    'Abdulkadir',
-    'Abdulkarem',
-    'Abdulkhader',
-    'Abdullah',
-    'Abdul-Majeed',
-    'Abdulmalik',
-    'Abdul-Rehman',
-    'Abdur',
-    'Abdurraheem',
-    'Abdur-Rahman',
-    'Abdur-Rehmaan',
-    'Abel',
-    'Abhinav',
-    'Abhisumant',
-    'Abid',
-    'Abir',
-    'Abraham',
-    'Abu',
-    'Ace',
-    'Adain',
-    'Adam',
-    'Adam-James',
-    'Addison',
-    'Addisson',
-    'Adegbola',
-    'Adegbolahan',
-    'Aden',
-    'Adenn',
-  ];
+  var rsvpArrdemo = [];
+  console.log(thisEvent.id);
+
+  useEffect(() => {
+    async function getRSVPs() {
+      const response = await API.graphql(
+        graphqlOperation(listRSVPS, {
+          filter: {eventID: {eq: thisEvent.id}},
+        }),
+      );
+      console.log(response.data?.listRSVPS.items);
+      response?.data?.listRSVPS?.items.map(item => {
+        if (item._deleted != true) {
+          rsvpArrdemo.push(item.username);
+        }
+      });
+      setRsvps(rsvpArrdemo);
+    }
+    if (thisEvent) {
+      getRSVPs();
+    }
+  }, []);
 
   async function deleteEventHandler() {
     try {
@@ -89,7 +63,9 @@ const AdminEventInfo = () => {
       <Text style={styles.title}>{thisEvent.title}</Text>
       <View style={styles.previewContainer}>
         <Pressable
-          onPress={() => navigation.navigate('EventDetails')}
+          onPress={() =>
+            navigation.navigate('EventDetails', {thisEvent: thisEvent})
+          }
           style={styles.previewButtonContainer}>
           <Text style={styles.previewButton}>Preview Event Ad</Text>
         </Pressable>
@@ -106,7 +82,7 @@ const AdminEventInfo = () => {
         </View>
         <FlatList
           style={styles.list}
-          data={rsvpArrdemo}
+          data={rsvps}
           renderItem={({item, index}) => (
             <Text style={styles.listItem}>
               {index + 1}. {item}

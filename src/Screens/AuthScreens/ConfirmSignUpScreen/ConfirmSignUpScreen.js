@@ -1,4 +1,4 @@
-import {Auth} from 'aws-amplify';
+import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {Formik} from 'formik';
 import React, {useState} from 'react';
 import {
@@ -10,10 +10,12 @@ import {
   SafeAreaView,
   Image,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/core';
+import {useNavigation, useRoute} from '@react-navigation/core';
+import {createOrganization, createUser} from '../../../graphql/mutations';
 
 function ConfirmSignUpScreen() {
   const navigation = useNavigation();
+  const route = useRoute();
   const [loading, setLoading] = useState(false);
 
   const onConfirmSignUp = async data => {
@@ -25,9 +27,44 @@ function ConfirmSignUpScreen() {
     try {
       const response = await Auth.confirmSignUp(data.username, data.code);
       await Auth.signIn({
-        username: formValues.email,
-        password: formValues.password,
+        username: data.username,
+        password: route.params.password,
       });
+
+      const thisUser = await Auth.currentAuthenticatedUser({bypassCache: true});
+      if (thisUser.attributes.profile === 'organization') {
+        await API.graphql(
+          graphqlOperation(createOrganization, {
+            input: {
+              id: thisUser.attributes.sub,
+              name: thisUser.attributes.name,
+              email: thisUser.attributes.email,
+            },
+          }),
+        );
+      }
+      if (thisUser.attributes.profile === 'user') {
+        await API.graphql(
+          graphqlOperation(createUser, {
+            input: {
+              id: thisUser.attributes.sub,
+              name: thisUser.attributes.name,
+              email: thisUser.attributes.email,
+            },
+          }),
+        );
+      }
+      if (thisUser.attributes.profile === 'user') {
+        await API.graphql(
+          graphqlOperation(createUser, {
+            input: {
+              id: thisUser.attributes.sub,
+              name: thisUser.attributes.name,
+              email: thisUser.attributes.email,
+            },
+          }),
+        );
+      }
       console.log('Response', response);
     } catch (e) {
       console.log('Error Signing In: ', e.message);
@@ -46,7 +83,7 @@ function ConfirmSignUpScreen() {
         <SafeAreaView style={styles.container}>
           <View style={styles.headerTitle}>
             <Image
-              source={require('../../../assets/images/SignInLogo.png')}
+              source={require('../../../../assets/images/SignInLogo.png')}
               style={styles.logoFull}
             />
           </View>
@@ -69,7 +106,7 @@ function ConfirmSignUpScreen() {
             />
             <View style={{alignItems: 'center', margin: 20}}>
               <Pressable onPress={handleSubmit} style={styles.signIn}>
-                <Text style={styles.primary}>SIGN UP</Text>
+                <Text style={styles.primary}>VERIFY EMAIL</Text>
               </Pressable>
               <Pressable
                 onPress={() => navigation.goBack()}
@@ -86,9 +123,9 @@ function ConfirmSignUpScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3BC14A',
+    backgroundColor: '#3DB589',
   },
-  primary: {fontSize: 18, color: 'black'},
+  primary: {fontSize: 18, color: 'white'},
   secondary: {fontSize: 14, color: 'white', fontWeight: 'bold'},
   headerTitle: {
     alignItems: 'center',
@@ -97,16 +134,13 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     margin: 12,
-    borderWidth: 1,
-    borderBottomColor: 'white',
-    borderColor: 'transparent',
+    backgroundColor: 'rgba(255,255,255,0.5)',
     padding: 10,
-    backgroundColor: 'white',
     borderRadius: 20,
     marginHorizontal: 25,
   },
   signIn: {
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     alignItems: 'center',
     width: 295,
     height: 50,

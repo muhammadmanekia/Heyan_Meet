@@ -1,6 +1,10 @@
 import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
+
+type SubscribeMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
 
 type OrganizationMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
@@ -18,6 +22,28 @@ type UserMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+type EagerSubscribe = {
+  readonly id: string;
+  readonly userID: string;
+  readonly Organization?: Organization | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazySubscribe = {
+  readonly id: string;
+  readonly userID: string;
+  readonly Organization: AsyncItem<Organization | undefined>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Subscribe = LazyLoading extends LazyLoadingDisabled ? EagerSubscribe : LazySubscribe
+
+export declare const Subscribe: (new (init: ModelInit<Subscribe, SubscribeMetaData>) => Subscribe) & {
+  copyOf(source: Subscribe, mutator: (draft: MutableModel<Subscribe, SubscribeMetaData>) => MutableModel<Subscribe, SubscribeMetaData> | void): Subscribe;
+}
+
 type EagerOrganization = {
   readonly id: string;
   readonly name?: string | null;
@@ -25,6 +51,7 @@ type EagerOrganization = {
   readonly url?: string | null;
   readonly phone?: string | null;
   readonly Events?: (Event | null)[] | null;
+  readonly Subscribes?: (Subscribe | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -36,6 +63,7 @@ type LazyOrganization = {
   readonly url?: string | null;
   readonly phone?: string | null;
   readonly Events: AsyncCollection<Event>;
+  readonly Subscribes: AsyncCollection<Subscribe>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -111,6 +139,7 @@ type EagerRSVP = {
   readonly paidAmount?: number | null;
   readonly eventID: string;
   readonly userID: string;
+  readonly username?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -122,6 +151,7 @@ type LazyRSVP = {
   readonly paidAmount?: number | null;
   readonly eventID: string;
   readonly userID: string;
+  readonly username?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -138,6 +168,7 @@ type EagerUser = {
   readonly email?: string | null;
   readonly phone?: string | null;
   readonly RSVPS?: (RSVP | null)[] | null;
+  readonly Subscribes?: (Subscribe | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -148,6 +179,7 @@ type LazyUser = {
   readonly email?: string | null;
   readonly phone?: string | null;
   readonly RSVPS: AsyncCollection<RSVP>;
+  readonly Subscribes: AsyncCollection<Subscribe>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

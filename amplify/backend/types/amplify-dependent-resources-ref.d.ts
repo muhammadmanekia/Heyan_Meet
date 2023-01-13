@@ -1,4 +1,11 @@
 export type AmplifyDependentResourcesAttributes = {
+    "api": {
+        "HeyanMeet": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
+    },
     "auth": {
         "HeyanMeet": {
             "IdentityPoolId": "string",
@@ -11,11 +18,10 @@ export type AmplifyDependentResourcesAttributes = {
             "CreatedSNSRole": "string"
         }
     },
-    "api": {
-        "HeyanMeet": {
-            "GraphQLAPIKeyOutput": "string",
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
+    "storage": {
+        "s3heyanmeetstorageabe89cc9": {
+            "BucketName": "string",
+            "Region": "string"
         }
     }
 }

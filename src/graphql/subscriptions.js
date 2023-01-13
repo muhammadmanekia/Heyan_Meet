@@ -1,6 +1,114 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateSubscribe = /* GraphQL */ `
+  subscription OnCreateSubscribe(
+    $filter: ModelSubscriptionSubscribeFilterInput
+  ) {
+    onCreateSubscribe(filter: $filter) {
+      id
+      organizationID
+      userID
+      Organization {
+        id
+        name
+        email
+        url
+        phone
+        Events {
+          nextToken
+          startedAt
+        }
+        Subscribes {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateSubscribe = /* GraphQL */ `
+  subscription OnUpdateSubscribe(
+    $filter: ModelSubscriptionSubscribeFilterInput
+  ) {
+    onUpdateSubscribe(filter: $filter) {
+      id
+      organizationID
+      userID
+      Organization {
+        id
+        name
+        email
+        url
+        phone
+        Events {
+          nextToken
+          startedAt
+        }
+        Subscribes {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteSubscribe = /* GraphQL */ `
+  subscription OnDeleteSubscribe(
+    $filter: ModelSubscriptionSubscribeFilterInput
+  ) {
+    onDeleteSubscribe(filter: $filter) {
+      id
+      organizationID
+      userID
+      Organization {
+        id
+        name
+        email
+        url
+        phone
+        Events {
+          nextToken
+          startedAt
+        }
+        Subscribes {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateOrganization = /* GraphQL */ `
   subscription OnCreateOrganization(
     $filter: ModelSubscriptionOrganizationFilterInput
@@ -33,6 +141,20 @@ export const onCreateOrganization = /* GraphQL */ `
           isActive
           paymentAmount
           organizationID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
           createdAt
           updatedAt
           _version
@@ -91,6 +213,20 @@ export const onUpdateOrganization = /* GraphQL */ `
         nextToken
         startedAt
       }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -140,6 +276,20 @@ export const onDeleteOrganization = /* GraphQL */ `
         nextToken
         startedAt
       }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -179,6 +329,7 @@ export const onCreateEvent = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
           createdAt
           updatedAt
           _version
@@ -227,6 +378,7 @@ export const onUpdateEvent = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
           createdAt
           updatedAt
           _version
@@ -275,6 +427,7 @@ export const onDeleteEvent = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
           createdAt
           updatedAt
           _version
@@ -306,6 +459,21 @@ export const onCreateUser = /* GraphQL */ `
           comments
           paidAmount
           eventID
+          userID
+          username
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      Subscribes {
+        items {
+          id
+          organizationID
           userID
           createdAt
           updatedAt
@@ -339,6 +507,21 @@ export const onUpdateUser = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
           createdAt
           updatedAt
           _version
@@ -371,6 +554,21 @@ export const onDeleteUser = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
           createdAt
           updatedAt
           _version
@@ -397,6 +595,7 @@ export const onCreateRSVP = /* GraphQL */ `
       paidAmount
       eventID
       userID
+      username
       createdAt
       updatedAt
       _version
@@ -414,6 +613,7 @@ export const onUpdateRSVP = /* GraphQL */ `
       paidAmount
       eventID
       userID
+      username
       createdAt
       updatedAt
       _version
@@ -431,6 +631,7 @@ export const onDeleteRSVP = /* GraphQL */ `
       paidAmount
       eventID
       userID
+      username
       createdAt
       updatedAt
       _version

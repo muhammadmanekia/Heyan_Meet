@@ -1,3 +1,10 @@
+type Subscribe @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  organizationID: ID! @index(name: "byOrganization")
+  userID: ID! @index(name: "byUser")
+  Organization: Organization @belongsTo(fields: ["organizationID"])
+}
+
 type Organization @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
@@ -5,6 +12,7 @@ type Organization @model @auth(rules: [{allow: public}]) {
   url: AWSURL
   phone: AWSPhone
   Events: [Event] @hasMany(indexName: "byOrganization", fields: ["id"])
+  Subscribes: [Subscribe] @hasMany(indexName: "byOrganization", fields: ["id"])
 }
 
 type Event @model @auth(rules: [{allow: public}]) {
@@ -21,7 +29,7 @@ type Event @model @auth(rules: [{allow: public}]) {
   city: String
   state: String
   country: String
-  banner: AWSURL
+  banner: String
   createdBy: String
   createdOn: AWSDate
   needRsvp: Boolean
@@ -37,6 +45,7 @@ type User @model @auth(rules: [{allow: public}]) {
   email: AWSEmail
   phone: AWSPhone
   RSVPS: [RSVP] @hasMany(indexName: "byUser", fields: ["id"])
+  Subscribes: [Subscribe] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 type RSVP @model @auth(rules: [{allow: public}]) {
@@ -46,4 +55,6 @@ type RSVP @model @auth(rules: [{allow: public}]) {
   paidAmount: Float
   eventID: ID! @index(name: "byEvent")
   userID: ID! @index(name: "byUser")
+  username: String
 }
+ 

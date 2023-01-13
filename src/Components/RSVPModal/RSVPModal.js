@@ -8,9 +8,13 @@ import {
   Button,
 } from 'react-native';
 import React, {useState} from 'react';
+import {API, Auth, graphqlOperation} from 'aws-amplify';
+import {createRSVP} from '../../graphql/mutations';
 
 const RSVPModal = ({handleOnPress, info}) => {
+  console.log(info);
   const [counter, setCounter] = useState(1);
+  const [comments, setComments] = useState(1);
 
   function updateCounter(count) {
     if (counter + count !== 0) {
@@ -18,37 +22,59 @@ const RSVPModal = ({handleOnPress, info}) => {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
+    const user = await Auth.currentAuthenticatedUser();
+    const response = await API.graphql(
+      graphqlOperation(createRSVP, {
+        input: {
+          userID: user.attributes.sub,
+          numberOfAttendees: counter,
+          comments: comments,
+          eventID: info.id,
+          username: user.attributes.name,
+        },
+      }),
+    );
+    console.log('RESPONSE', response);
     handleOnPress('close');
   }
   return (
-    <View style={styles.modalContainer}>
+    <Pressable
+      style={styles.modalContainer}
+      onPress={() => handleOnPress('close')}>
       {info && (
-        <Pressable style={styles.modal} onPress={() => handleOnPress('close')}>
-          <Text style={styles.title}>RSVP To {info.details.title}</Text>
+        <Pressable style={styles.modal}>
+          <Text style={styles.title}>RSVP To {info.title}</Text>
           <View style={styles.attendance}>
             <Text>How Many Attending?</Text>
-            <Pressable
-              style={{...styles.increment, backgroundColor: 'green'}}
-              onPress={() => updateCounter(1)}>
-              <Text style={styles.sign}>+</Text>
-            </Pressable>
-            <View>
-              <Text>{counter}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignSelf: 'center',
+              }}>
+              <Pressable
+                style={{...styles.increment}}
+                onPress={() => updateCounter(1)}>
+                <Text style={styles.sign}>+</Text>
+              </Pressable>
+              <View>
+                <Text style={{margin: 20}}>{counter}</Text>
+              </View>
+              <Pressable
+                style={{...styles.increment}}
+                onPress={() => updateCounter(-1)}>
+                <Text style={styles.sign}>-</Text>
+              </Pressable>
             </View>
-            <Pressable
-              style={{...styles.increment, backgroundColor: 'red'}}
-              onPress={() => updateCounter(-1)}>
-              <Text style={styles.sign}>-</Text>
-            </Pressable>
           </View>
           <View style={styles.comments}>
-            <Text>Comments</Text>
+            <Text style={{fontWeight: 'bold'}}>Comments</Text>
             <TextInput
               multiline
               style={styles.input}
               placeholder="Share information with the organizers"
-              fontSize={10}
+              fontSize={14}
+              onBlur={e => setComments(e)}
             />
           </View>
           <Pressable style={styles.button} onPress={handleSubmit}>
@@ -56,7 +82,7 @@ const RSVPModal = ({handleOnPress, info}) => {
           </Pressable>
         </Pressable>
       )}
-    </View>
+    </Pressable>
   );
 };
 
@@ -73,23 +99,22 @@ const styles = StyleSheet.create({
     height: 'auto',
     backgroundColor: 'white',
     borderRadius: 10,
+    alignItems: 'center',
   },
   title: {
-    fontSize: 18,
+    fontSize: 22,
     margin: '5%',
+    fontWeight: 'bold',
   },
-  attendance: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    margin: '1%',
-    marginHorizontal: '5%',
-  },
+  attendance: {alignItems: 'center'},
   increment: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: 30,
+    height: 30,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'black',
+    margin: 20,
   },
   comments: {
     margin: '5%',
@@ -99,25 +124,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 12,
+    width: 270,
   },
   button: {
-    backgroundColor: '#4D5057',
-    justifyContent: 'flex-end',
-    width: 60,
+    backgroundColor: '#3DB589',
     alignItems: 'center',
-    alignSelf: 'flex-end',
     marginHorizontal: '5%',
     marginBottom: '3%',
+    width: '60%',
     borderRadius: 6,
   },
   submit: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     margin: 7,
+    fontWeight: 'bold',
   },
   sign: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 21,
   },
 });
 export default RSVPModal;

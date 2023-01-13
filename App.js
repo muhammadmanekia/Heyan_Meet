@@ -7,9 +7,11 @@ import {withAuthenticator} from 'aws-amplify-react-native';
 import Auth from './src/Auth/Auth';
 
 import Navigation from './src/Navigation/Navigation';
-import SignInScreen from './src/Screens/SignInScreen/SignInScreen';
+import SignInScreen from './src/Screens/AuthScreens/SignInScreen/SignInScreen';
 
 Amplify.configure(awsconfig);
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.style = {fontFamily: 'Roboto'};
 
 function App() {
   return (

@@ -24,7 +24,7 @@ const SignInScreen = () => {
         attributes: {email, name, phone_number: '+1' + phone_number, profile},
       });
       console.log('Response', response);
-      navigation.navigate('ConfirmSignUp');
+      navigation.navigate('ConfirmSignUp', {password: password});
     } catch (e) {
       console.log('Error Signing Up: ', e.message);
     }
@@ -45,7 +45,7 @@ const SignInScreen = () => {
         <SafeAreaView style={styles.container}>
           <View style={styles.headerTitle}>
             <Image
-              source={require('../../../assets/images/SignInLogo.png')}
+              source={require('../../../../assets/images/SignInLogo.png')}
               style={styles.logoFull}
             />
           </View>
@@ -104,7 +104,16 @@ const SignInScreen = () => {
                       ? styles.periodActive
                       : styles.period
                   }>
-                  <Text style={styles.periodText}>User</Text>
+                  <Text
+                    style={[
+                      {fontWeight: 'bold', textAlign: 'center'},
+                      values.profile != 'user' && {
+                        color: 'white',
+                        fontWeight: 'bold',
+                      },
+                    ]}>
+                    User
+                  </Text>
                 </View>
               </Pressable>
               <Pressable
@@ -118,7 +127,16 @@ const SignInScreen = () => {
                       ? styles.periodActive
                       : styles.period
                   }>
-                  <Text style={styles.periodText}>Organization</Text>
+                  <Text
+                    style={[
+                      {fontWeight: 'bold', textAlign: 'center'},
+                      values.profile != 'organization' && {
+                        color: 'white',
+                        fontWeight: 'bold',
+                      },
+                    ]}>
+                    Organization
+                  </Text>
                 </View>
               </Pressable>
             </View>
@@ -142,9 +160,9 @@ const SignInScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3BC14A',
+    backgroundColor: '#3DB589',
   },
-  primary: {fontSize: 18, color: 'black'},
+  primary: {fontSize: 18, color: 'white', fontWeight: 'bold'},
   secondary: {fontSize: 14, color: 'white', fontWeight: 'bold'},
   text: {
     margin: 10,
@@ -168,27 +186,19 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 12,
     borderWidth: 1,
-    borderBottomColor: 'white',
     borderColor: 'transparent',
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,0.5)',
     borderRadius: 20,
     marginHorizontal: 25,
   },
   signIn: {
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     alignItems: 'center',
     width: 295,
     height: 50,
     justifyContent: 'center',
     borderRadius: 50,
-    shadowRadius: 8,
-    shadowOpacity: 0.5,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
   },
   logoFull: {
     width: 250,
@@ -207,10 +217,12 @@ const styles = StyleSheet.create({
   },
   period: {
     borderRadius: 5,
-    borderColor: 'white',
+    backgroundColor: 'black',
+    color: 'white',
     borderWidth: 1,
     marginHorizontal: 5,
     padding: 2,
+    width: 100,
   },
   periodActive: {
     backgroundColor: 'white',
@@ -220,6 +232,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginHorizontal: 5,
     padding: 2,
+    shadowRadius: 8,
+    shadowOpacity: 0.8,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    width: 100,
   },
   radioTitle: {
     color: 'white',

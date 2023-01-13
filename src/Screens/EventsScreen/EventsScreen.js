@@ -1,22 +1,35 @@
-import {View, Text, FlatList, Modal, StyleSheet, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Modal,
+  StyleSheet,
+  Pressable,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import EventsListItem from '../../Components/EventsListItem/EventsListItem';
 import RSVPModal from '../../Components/RSVPModal/RSVPModal';
 import {useNavigation, useRoute} from '@react-navigation/core';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
-import {getEvent, listEvents} from '../../graphql/queries';
+import {listEvents} from '../../graphql/queries';
+import {useIsFocused} from '@react-navigation/native';
 
 const EventsScreen = ({showRSVP}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const route = useRoute();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
-  let currentOrg = route.params.orgTitle;
+  const {orgId} = route.params;
+
   const [rsvpInfo, setRSVPInfo] = useState([]);
 
   function handleOnPress(info) {
+    console.log(info);
     requestAnimationFrame(() => {
       if (info !== 'close') {
         setRSVPInfo(info);
@@ -26,47 +39,68 @@ const EventsScreen = ({showRSVP}) => {
   }
 
   useEffect(() => {
+    let checkAPISubscribed = true;
+
     async function getEvents() {
+      setLoading(true);
       const user = await Auth.currentAuthenticatedUser({bypassCache: true});
       const events = await API.graphql(graphqlOperation(listEvents));
-
-      var eventsArr = [];
-      events.data.listEvents.items.map(e => {
-        if (!e._deleted) {
-          if (user.attributes.sub == e.organizationID) {
-            eventsArr.push(e);
+      if (checkAPISubscribed) {
+        var eventsArr = [];
+        events.data.listEvents.items.map(e => {
+          if (!e._deleted) {
+            if (orgId) {
+              if (orgId == e.organizationID) {
+                eventsArr.push(e);
+              }
+            } else {
+              if (user.attributes.sub == e.organizationID) {
+                eventsArr.push(e);
+              }
+            }
           }
-        }
-      });
-      setFilteredEvents(eventsArr);
+        });
+        setFilteredEvents(eventsArr);
+        setLoading(false);
+      }
     }
     getEvents();
-  }, []);
+
+    return () => {
+      checkAPISubscribed = false;
+      setLoading(false);
+    };
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>
-      {showRSVP && <Text style={styles.title}>Events</Text>}
-      <FlatList
-        data={filteredEvents}
-        renderItem={({item}) => (
-          <Pressable
-            onPress={() => {
-              route.params.showRSVP
-                ? navigation.navigate('EventDetails', {thisevent: item})
-                : navigation.navigate('AdminInfo', {thisEvent: item});
-            }}>
-            <EventsListItem
-              event={item}
-              showRSVP={route.params.showRSVP}
-              handleOnPress={handleOnPress}
-            />
-          </Pressable>
-        )}
-      />
-      {route.params.showRSVP && (
-        <Modal transparent visible={modalVisible}>
-          <RSVPModal handleOnPress={handleOnPress} info={rsvpInfo} />
-        </Modal>
+      {loading ? (
+        <ActivityIndicator animating={loading} size="large" />
+      ) : (
+        <View>
+          <FlatList
+            data={filteredEvents}
+            renderItem={({item}) => (
+              <Pressable
+                onPress={() => {
+                  route.params.showRSVP
+                    ? navigation.navigate('EventDetails', {thisEvent: item})
+                    : navigation.navigate('AdminInfo', {thisEvent: item});
+                }}>
+                <EventsListItem
+                  event={item}
+                  showRSVP={route.params.showRSVP}
+                  handleOnPress={handleOnPress}
+                />
+              </Pressable>
+            )}
+          />
+          {route.params.showRSVP && (
+            <Modal transparent visible={modalVisible}>
+              <RSVPModal handleOnPress={handleOnPress} info={rsvpInfo} />
+            </Modal>
+          )}
+        </View>
       )}
     </View>
   );
@@ -76,6 +110,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     backgroundColor: 'white',
+    flex: 1,
+    justifyContent: 'center',
   },
   title: {
     fontSize: 24,

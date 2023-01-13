@@ -6,6 +6,7 @@ import {
   TextInput,
   StyleSheet,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 
@@ -15,6 +16,7 @@ const EventDetails = ({
   date,
   setScreenCount,
   screenCount,
+  loading,
 }) => {
   const [open, setOpen] = useState(false);
   const [paymentInput, setPaymentInput] = useState(false);
@@ -88,7 +90,7 @@ const EventDetails = ({
           <TextInput
             style={styles.input}
             onChangeText={formikProps.handleChange('paymentAmount')}
-            value={formikProps.values.paymentAmount}
+            value={formikProps.values.paymentAmount + ''}
             placeholder="$"
             keyboardType="numeric"
           />
@@ -99,9 +101,10 @@ const EventDetails = ({
         )}
       </View>
       <Pressable
-        onPress={() => setScreenCount(screenCount + 1)}
+        // onPress={() => setScreenCount(screenCount + 1)}
+        onPress={formikProps.handleSubmit}
         style={styles.nextButton}>
-        <Text style={styles.buttonText}>Next</Text>
+        <Text style={styles.buttonText}>Submit</Text>
       </Pressable>
     </View>
   );

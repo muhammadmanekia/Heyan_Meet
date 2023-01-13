@@ -8,57 +8,59 @@ import {
   Pressable,
 } from 'react-native';
 import React from 'react';
+import {S3Image} from 'aws-amplify-react-native/dist/Storage';
 
 const EventsListItem = ({event, handleOnPress, showRSVP}) => {
   function handleRSVPPress() {
     handleOnPress(event);
   }
-  console.log('EVENT', event.title);
   return (
     <View>
       <View style={styles.container}>
-        <ImageBackground
-          source={{uri: event.image}}
-          style={styles.image}
-          imageStyle={{
-            borderRadius: 30,
-            resizeMode: 'cover',
-          }}>
-          <View style={styles.description}>
-            <Text style={styles.title}>{event.title}</Text>
-            <View style={styles.specs}>
-              <View style={styles.address}>
-                <Image
-                  source={{
-                    uri: 'https://cdn-icons-png.flaticon.com/512/535/535188.png',
-                  }}
-                  style={styles.icon}
-                />
-                <Text style={styles.specsText}>{event.streetAddress}</Text>
-              </View>
-              <View style={styles.date}>
-                <Image
-                  source={{
-                    uri: 'https://cdn-icons-png.flaticon.com/512/833/833593.png',
-                  }}
-                  style={styles.icon}
-                />
-                <Text style={styles.specsText} numberOfLines={2}>
-                  {event.date}
-                </Text>
-              </View>
+        <View style={{height: 190}}>
+          <S3Image
+            imgKey={event.banner}
+            style={styles.image}
+            imageStyle={{
+              borderRadius: 30,
+              resizeMode: 'cover',
+            }}
+          />
+        </View>
+        <View style={styles.description}>
+          <Text style={styles.title}>{event.title}</Text>
+          <View style={styles.specs}>
+            <View style={styles.address}>
+              <Image
+                source={{
+                  uri: 'https://cdn-icons-png.flaticon.com/512/535/535188.png',
+                }}
+                style={styles.icon}
+              />
+              <Text style={styles.specsText}>{event.streetAddress}</Text>
             </View>
-            {showRSVP && (
-              <View style={styles.buttonWrap}>
-                <Pressable>
-                  <Text style={styles.button} onPress={handleRSVPPress}>
-                    RSVP
-                  </Text>
-                </Pressable>
-              </View>
-            )}
+            <View style={styles.date}>
+              <Image
+                source={{
+                  uri: 'https://cdn-icons-png.flaticon.com/512/833/833593.png',
+                }}
+                style={styles.icon}
+              />
+              <Text style={styles.specsText} numberOfLines={2}>
+                {new Date(event.startDateTime).toDateString()}
+              </Text>
+            </View>
           </View>
-        </ImageBackground>
+          {showRSVP && (
+            <View style={styles.buttonWrap}>
+              <Pressable>
+                <Text style={styles.button} onPress={handleRSVPPress}>
+                  RSVP
+                </Text>
+              </Pressable>
+            </View>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -67,18 +69,26 @@ const EventsListItem = ({event, handleOnPress, showRSVP}) => {
 export default EventsListItem;
 
 const styles = StyleSheet.create({
+  container: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    // shadowColor: '#000',
+    // shadowOffset: {width: 0, height: 0},
+    // shadowOpacity: 0.1,
+    // shadowRadius: 2,
+    marginVertical: 2,
+    width: '100%',
+  },
   image: {
     alignSelf: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    width: 350,
-    height: 210,
+    width: '100%',
+    height: 250,
     borderRadius: 30,
     position: 'relative',
     margin: 20,
+    borderColor: 'rgba(0,0,0,0.2)',
+    borderWidth: StyleSheet.hairlineWidth,
   },
 
   description: {
@@ -87,6 +97,8 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 30,
     borderBottomEndRadius: 30,
     padding: 5,
+    borderColor: 'rgba(0,0,0,0.2)',
+    borderWidth: StyleSheet.hairlineWidth,
   },
   specs: {
     flexDirection: 'row',
@@ -124,13 +136,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonWrap: {
-    backgroundColor: '#3bc14a',
+    backgroundColor: 'black',
     width: 50,
     height: 50,
-    borderRadius: 25,
+    borderRadius: 15,
     position: 'absolute',
-    left: '85%',
-    top: '10%',
+    left: '88%',
+    top: '5%',
     alignItems: 'center',
     justifyContent: 'center',
   },

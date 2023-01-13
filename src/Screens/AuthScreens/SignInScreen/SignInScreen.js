@@ -42,7 +42,7 @@ const SignInScreen = () => {
         <SafeAreaView style={styles.container}>
           <View style={styles.headerTitle}>
             <Image
-              source={require('../../../assets/images/SignInLogo.png')}
+              source={require('../../../../assets/images/SignInLogo.png')}
               style={styles.logoFull}
             />
           </View>
@@ -73,13 +73,13 @@ const SignInScreen = () => {
               onPress={handleSubmit}
               style={styles.signIn}>
               <Text style={styles.primary}>
-                {loading ? 'PLEASE WAIT...' : 'SIGN IN'}
+                {loading ? 'PLEASE WAIT...' : 'Continue'}
               </Text>
             </Pressable>
             <Pressable
               onPress={() => navigation.navigate('SignUp')}
               style={styles.signUp}>
-              <Text style={styles.secondary}>SIGN UP</Text>
+              <Text style={styles.secondary}>Sign Up</Text>
             </Pressable>
             <Pressable onPress={() => navigation.navigate('ResetPassword')}>
               <Text style={styles.secondary}>Forgot Password</Text>
@@ -94,7 +94,7 @@ const SignInScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3BC14A',
+    backgroundColor: '#3DB589',
   },
   text: {
     margin: 10,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     fontWeight: '300',
-    fontFamily: 'HelveticaNeue-Medium',
+    fontFamily: 'Roboto',
     letterSpacing: 2,
   },
   headerTitle: {
@@ -114,33 +114,40 @@ const styles = StyleSheet.create({
     fontFamily: 'PoiretOne-Regular',
     color: 'white',
   },
-  primary: {fontSize: 18, color: 'black'},
-  secondary: {fontSize: 14, color: 'white', fontWeight: 'bold'},
+  primary: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+  },
+  secondary: {
+    fontSize: 16,
+    color: 'black',
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+  },
   input: {
     height: 40,
     margin: 12,
-    borderWidth: 1,
-    borderBottomColor: 'white',
-    borderColor: 'transparent',
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,0.5)',
     borderRadius: 20,
     marginHorizontal: 25,
   },
   signIn: {
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     alignItems: 'center',
     width: 295,
-    height: 50,
+    height: 45,
     justifyContent: 'center',
     borderRadius: 50,
-    shadowRadius: 8,
-    shadowOpacity: 0.5,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
+    // shadowRadius: 2,
+    // shadowOpacity: 0.5,
+    // shadowColor: '#000000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 5,
+    // },
   },
   logoFull: {
     width: 250,
@@ -150,12 +157,13 @@ const styles = StyleSheet.create({
   signUp: {
     margin: 20,
     alignItems: 'center',
-    width: 295,
-    height: 50,
+    width: 250,
+    height: 40,
     justifyContent: 'center',
     borderRadius: 50,
     borderColor: 'white',
     borderWidth: 1,
+    backgroundColor: 'white',
   },
 });
 

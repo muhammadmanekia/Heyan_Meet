@@ -1,6 +1,114 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getSubscribe = /* GraphQL */ `
+  query GetSubscribe($id: ID!) {
+    getSubscribe(id: $id) {
+      id
+      organizationID
+      userID
+      Organization {
+        id
+        name
+        email
+        url
+        phone
+        Events {
+          nextToken
+          startedAt
+        }
+        Subscribes {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listSubscribes = /* GraphQL */ `
+  query ListSubscribes(
+    $filter: ModelSubscribeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSubscribes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        organizationID
+        userID
+        Organization {
+          id
+          name
+          email
+          url
+          phone
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncSubscribes = /* GraphQL */ `
+  query SyncSubscribes(
+    $filter: ModelSubscribeFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncSubscribes(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        organizationID
+        userID
+        Organization {
+          id
+          name
+          email
+          url
+          phone
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getOrganization = /* GraphQL */ `
   query GetOrganization($id: ID!) {
     getOrganization(id: $id) {
@@ -40,6 +148,20 @@ export const getOrganization = /* GraphQL */ `
         nextToken
         startedAt
       }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -62,6 +184,10 @@ export const listOrganizations = /* GraphQL */ `
         url
         phone
         Events {
+          nextToken
+          startedAt
+        }
+        Subscribes {
           nextToken
           startedAt
         }
@@ -96,6 +222,10 @@ export const syncOrganizations = /* GraphQL */ `
         url
         phone
         Events {
+          nextToken
+          startedAt
+        }
+        Subscribes {
           nextToken
           startedAt
         }
@@ -141,6 +271,7 @@ export const getEvent = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
           createdAt
           updatedAt
           _version
@@ -265,6 +396,21 @@ export const getUser = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
           createdAt
           updatedAt
           _version
@@ -295,6 +441,10 @@ export const listUsers = /* GraphQL */ `
         email
         phone
         RSVPS {
+          nextToken
+          startedAt
+        }
+        Subscribes {
           nextToken
           startedAt
         }
@@ -331,6 +481,10 @@ export const syncUsers = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Subscribes {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -351,6 +505,7 @@ export const getRSVP = /* GraphQL */ `
       paidAmount
       eventID
       userID
+      username
       createdAt
       updatedAt
       _version
@@ -373,6 +528,7 @@ export const listRSVPS = /* GraphQL */ `
         paidAmount
         eventID
         userID
+        username
         createdAt
         updatedAt
         _version
@@ -404,6 +560,7 @@ export const syncRSVPS = /* GraphQL */ `
         paidAmount
         eventID
         userID
+        username
         createdAt
         updatedAt
         _version

@@ -1,6 +1,117 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createSubscribe = /* GraphQL */ `
+  mutation CreateSubscribe(
+    $input: CreateSubscribeInput!
+    $condition: ModelSubscribeConditionInput
+  ) {
+    createSubscribe(input: $input, condition: $condition) {
+      id
+      organizationID
+      userID
+      Organization {
+        id
+        name
+        email
+        url
+        phone
+        Events {
+          nextToken
+          startedAt
+        }
+        Subscribes {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateSubscribe = /* GraphQL */ `
+  mutation UpdateSubscribe(
+    $input: UpdateSubscribeInput!
+    $condition: ModelSubscribeConditionInput
+  ) {
+    updateSubscribe(input: $input, condition: $condition) {
+      id
+      organizationID
+      userID
+      Organization {
+        id
+        name
+        email
+        url
+        phone
+        Events {
+          nextToken
+          startedAt
+        }
+        Subscribes {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteSubscribe = /* GraphQL */ `
+  mutation DeleteSubscribe(
+    $input: DeleteSubscribeInput!
+    $condition: ModelSubscribeConditionInput
+  ) {
+    deleteSubscribe(input: $input, condition: $condition) {
+      id
+      organizationID
+      userID
+      Organization {
+        id
+        name
+        email
+        url
+        phone
+        Events {
+          nextToken
+          startedAt
+        }
+        Subscribes {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const createOrganization = /* GraphQL */ `
   mutation CreateOrganization(
     $input: CreateOrganizationInput!
@@ -34,6 +145,20 @@ export const createOrganization = /* GraphQL */ `
           isActive
           paymentAmount
           organizationID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
           createdAt
           updatedAt
           _version
@@ -93,6 +218,20 @@ export const updateOrganization = /* GraphQL */ `
         nextToken
         startedAt
       }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -134,6 +273,20 @@ export const deleteOrganization = /* GraphQL */ `
           isActive
           paymentAmount
           organizationID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
           createdAt
           updatedAt
           _version
@@ -185,6 +338,7 @@ export const createEvent = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
           createdAt
           updatedAt
           _version
@@ -236,6 +390,7 @@ export const updateEvent = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
           createdAt
           updatedAt
           _version
@@ -287,6 +442,7 @@ export const deleteEvent = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
           createdAt
           updatedAt
           _version
@@ -321,6 +477,21 @@ export const createUser = /* GraphQL */ `
           comments
           paidAmount
           eventID
+          userID
+          username
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      Subscribes {
+        items {
+          id
+          organizationID
           userID
           createdAt
           updatedAt
@@ -357,6 +528,21 @@ export const updateUser = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
           createdAt
           updatedAt
           _version
@@ -392,6 +578,21 @@ export const deleteUser = /* GraphQL */ `
           paidAmount
           eventID
           userID
+          username
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      Subscribes {
+        items {
+          id
+          organizationID
+          userID
           createdAt
           updatedAt
           _version
@@ -421,6 +622,7 @@ export const createRSVP = /* GraphQL */ `
       paidAmount
       eventID
       userID
+      username
       createdAt
       updatedAt
       _version
@@ -441,6 +643,7 @@ export const updateRSVP = /* GraphQL */ `
       paidAmount
       eventID
       userID
+      username
       createdAt
       updatedAt
       _version
@@ -461,6 +664,7 @@ export const deleteRSVP = /* GraphQL */ `
       paidAmount
       eventID
       userID
+      username
       createdAt
       updatedAt
       _version

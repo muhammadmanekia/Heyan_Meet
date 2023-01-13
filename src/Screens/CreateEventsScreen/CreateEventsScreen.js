@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   Switch,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useCallback, useMemo} from 'react';
 import * as ImagePicker from 'react-native-image-picker';
@@ -13,13 +14,17 @@ import {Formik, useFormik, useFormikContext} from 'formik';
 import EventDetails from '../../Components/FormPage/EventDetails';
 import RSVPDetails from '../../Components/FormPage/RSVPDetails';
 import {useNavigation} from '@react-navigation/core';
-import {API, graphqlOperation} from 'aws-amplify';
+import {API, graphqlOperation, Storage} from 'aws-amplify';
 import {createEvent} from '../../graphql/mutations';
 import {useRoute} from '@react-navigation/core';
+import 'react-native-get-random-values';
+import {v4 as uuidv4} from 'uuid';
 
 const CreateEventsScreen = () => {
   const [date, setDate] = useState(new Date());
   const [screenCount, setScreenCount] = useState(1);
+  const [loading, setLoading] = useState(false);
+
   const [data, setData] = useState({
     title: '',
     startDateTime: '',
@@ -39,32 +44,21 @@ const CreateEventsScreen = () => {
       startDateTime: '',
       streetAddress: '',
       description: '',
-      url: '',
+      banner: '',
       paymentAmount: '',
-      // zipcode: '12345',
-      // email: 'test@test.com',
-      // phone: '7324295791',
-      // endDateTime: '1997-07-16T19:20:30.45+01:00',
-      // city: 'I',
-      // state: 'I',
-      // country: 'I',
-      // banner: 'https://www.google.com',
-      // createdOn: '2020-03-12',
-      // createdBy: 'Test',
-      // needRsvp: true,
-      // isActive: true,
       organizationID: user.sub,
-      // RSVPS: [],
     },
     onSubmit: async values => {
+      setLoading(true);
       setData(values);
       values.paymentAmount = values.paymentAmount ? +values.paymentAmount : 0;
-      console.log(data);
+      values.banner = await uploadFile(values.banner);
       try {
         await API.graphql(graphqlOperation(createEvent, {input: values}));
       } catch (e) {
         console.error(e);
       }
+      setLoading(false);
       navigation.navigate('AdminHome');
     },
   });
@@ -76,10 +70,23 @@ const CreateEventsScreen = () => {
       includeBase64: false,
     };
     const uri = await ImagePicker.launchImageLibrary(options);
-    formikProps.setFieldValue('url', uri.assets[0].uri);
+    formikProps.setFieldValue('banner', uri.assets[0].uri);
   }, []);
 
-  console.log('DATA', data);
+  const uploadFile = async fileUri => {
+    try {
+      const response = await fetch(fileUri);
+      const blob = await response.blob();
+      const key = `${uuidv4()}.png`;
+
+      await Storage.put(key, blob, {
+        contentType: 'image/png', // contentType is optional
+      });
+      return key;
+    } catch (err) {
+      console.log('Error uploading file:', err);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -91,10 +98,12 @@ const CreateEventsScreen = () => {
           date={date}
           screenCount={screenCount}
           setScreenCount={setScreenCount}
+          loading={loading}
         />
       ) : (
         <RSVPDetails formikProps={formikProps} />
       )}
+      <ActivityIndicator animating={loading} size="large" />
     </View>
   );
 };
