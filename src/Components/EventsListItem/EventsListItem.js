@@ -61,6 +61,15 @@ const EventsListItem = ({event, handleOnPress, showRSVP}) => {
             </View>
           )}
         </View>
+        {event.paymentAmount ? (
+          <View style={styles.paymentWrap}>
+            <Pressable>
+              <Text style={styles.paymentButton} onPress={handleRSVPPress}>
+                $
+              </Text>
+            </Pressable>
+          </View>
+        ) : null}
       </View>
     </View>
   );
@@ -149,5 +158,21 @@ const styles = StyleSheet.create({
   button: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  paymentWrap: {
+    backgroundColor: 'black',
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    position: 'absolute',
+    left: '90%',
+    top: '10%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paymentButton: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 22,
   },
 });

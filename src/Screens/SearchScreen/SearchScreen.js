@@ -36,8 +36,6 @@ const SearchScreen = () => {
     listOrgs();
   }, []);
 
-  console.log(subscribed);
-
   const handleSubmit = item => {
     if (
       subscribed

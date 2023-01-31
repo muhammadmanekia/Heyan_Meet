@@ -1,32 +1,23 @@
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import EventsScreen from '../EventsScreen/EventsScreen';
-import {useNavigation} from '@react-navigation/core';
-import {API, Auth, graphqlOperation} from 'aws-amplify';
-import {createOrganization} from '../../graphql/mutations';
+import {useNavigation, useRoute} from '@react-navigation/core';
 
 const AdminEventsScreen = () => {
   const navigation = useNavigation();
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    getUser();
-  }, []);
 
-  async function getUser() {
-    await Auth.currentAuthenticatedUser({bypassCache: true}).then(user => {
-      setUser(user.attributes);
-    });
-  }
+  const route = useRoute();
+
+  const {user} = route.params;
+
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.orgTitle}>{user && user.name} </Text> */}
-
       <Text style={styles.subtitle}>Upcoming Events</Text>
       <View style={styles.list}>
         <EventsScreen showRSVP={false} />
       </View>
       <Pressable
-        onPress={() => navigation.navigate('CreateEvent', {user: user})}
+        onPress={() => navigation.navigate('CreateEvent', {user: user && user})}
         style={styles.createEvent}>
         <Text style={styles.buttonText}>Create An Event</Text>
       </Pressable>

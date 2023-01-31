@@ -29,7 +29,6 @@ const EventsScreen = ({showRSVP}) => {
   const [rsvpInfo, setRSVPInfo] = useState([]);
 
   function handleOnPress(info) {
-    console.log(info);
     requestAnimationFrame(() => {
       if (info !== 'close') {
         setRSVPInfo(info);

@@ -18,7 +18,6 @@ const SettingsScreen = () => {
     var userInfo = true;
     async function getUser() {
       const authUser = await Auth.currentAuthenticatedUser({bypassCache: true});
-      console.log(authUser);
       if (userInfo) {
         setUser(authUser);
         setNewAttributes(authUser.attributes);
@@ -32,13 +31,11 @@ const SettingsScreen = () => {
 
   async function updateAttribute() {
     const response = await Auth.updateUserAttributes(user, newAttributes);
-    console.log(response);
   }
 
   async function deleteUser() {
     try {
       const result = await Auth.deleteUser();
-      console.log(result);
     } catch (error) {
       console.log('Error deleting user', error);
     }

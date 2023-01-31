@@ -1,7 +1,7 @@
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
 import React from 'react';
 
-const OrgListItem = ({org}) => {
+const OrgListItem = ({org, handleDelete, deleteToggle}) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoWrap}>
@@ -13,8 +13,15 @@ const OrgListItem = ({org}) => {
         /> */}
       </View>
       <View style={styles.content}>
+        {deleteToggle && (
+          <Pressable
+            style={styles.deleteButton}
+            onPress={() => handleDelete(org)}>
+            <Text style={styles.deleteText}>-</Text>
+          </Pressable>
+        )}
         <Text style={styles.title} numberOfLines={2}>
-          {org && org.name}
+          {org.Organization && org.Organization.name}
         </Text>
       </View>
     </View>
@@ -32,6 +39,7 @@ const styles = StyleSheet.create({
     height: 90,
     borderBottomColor: 'lightgray',
     borderBottomWidth: StyleSheet.hairlineWidth,
+    alignItems: 'center',
   },
   logo: {
     width: 80,
@@ -46,11 +54,28 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     margin: 10,
+    flexDirection: 'row',
   },
   title: {
     fontWeight: 'bold',
     fontSize: 24,
+  },
+  deleteButton: {
+    width: 25,
+    height: 25,
+    backgroundColor: 'black',
+    borderRadius: 13,
+    marginRight: 10,
+    alignSelf: 'center',
+    alignItems: 'center',
+    paddingVertical: 'auto',
+  },
+  deleteText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '800',
+    textAlign: 'center',
   },
 });

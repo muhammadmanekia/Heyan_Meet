@@ -5,6 +5,8 @@ import {
   Pressable,
   FlatList,
   ScrollView,
+  Image,
+  Modal,
 } from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/core';
@@ -20,10 +22,11 @@ const AdminEventInfo = () => {
   const route = useRoute();
 
   const [rsvps, setRsvps] = useState([]);
+  const [comments, setComments] = useState('');
+
   const {thisEvent} = route.params;
   const navigation = useNavigation();
   var rsvpArrdemo = [];
-  console.log(thisEvent.id);
 
   useEffect(() => {
     async function getRSVPs() {
@@ -32,13 +35,16 @@ const AdminEventInfo = () => {
           filter: {eventID: {eq: thisEvent.id}},
         }),
       );
-      console.log(response.data?.listRSVPS.items);
       response?.data?.listRSVPS?.items.map(item => {
         if (item._deleted != true) {
-          rsvpArrdemo.push(item.username);
+          rsvpArrdemo.push({
+            username: item.username,
+            attendees: item.numberOfAttendees,
+            comments: item.comments,
+          });
         }
       });
-      setRsvps(rsvpArrdemo);
+      setRsvps([...rsvpArrdemo]);
     }
     if (thisEvent) {
       getRSVPs();
@@ -52,12 +58,12 @@ const AdminEventInfo = () => {
           input: {_version: thisEvent._version, id: thisEvent.id},
         }),
       );
-      console.log('RESPONSE', response);
       navigation.navigate('AdminHome');
     } catch (e) {
       console.log('Error Deleting Event: ', e);
     }
   }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{thisEvent.title}</Text>
@@ -72,24 +78,55 @@ const AdminEventInfo = () => {
         <Pressable
           onPress={deleteEventHandler}
           style={styles.deleteButtonContainer}>
-          <Text style={styles.previewButton}>Delete Event</Text>
+          <Text style={styles.deleteButton}>Delete Event</Text>
         </Pressable>
       </View>
       <View>
         <View style={styles.subContainer}>
           <Text style={styles.subtitle}>RSVPs</Text>
-          <Text style={styles.subtitle}>{rsvpArrdemo.length}</Text>
+          <Text style={styles.subtitle}>{rsvps.length}</Text>
         </View>
         <FlatList
           style={styles.list}
           data={rsvps}
           renderItem={({item, index}) => (
-            <Text style={styles.listItem}>
-              {index + 1}. {item}
-            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <Text style={styles.listItem}>
+                {index + 1}. {item.username}
+              </Text>
+              <Text style={styles.listItem}>
+                +{item.attendees > 1 && item.attendees - 1}
+              </Text>
+              {item.comments !== '' && (
+                <Pressable
+                  onPress={() => setComments(item.comments)}
+                  style={{marginVertical: 2}}>
+                  <Image
+                    source={{
+                      uri: 'https://cdn-icons-png.flaticon.com/512/134/134723.png',
+                    }}
+                    style={{width: 20, height: 20}}
+                  />
+                </Pressable>
+              )}
+            </View>
           )}
         />
       </View>
+      <Modal transparent visible={comments !== ''}>
+        <Pressable
+          style={styles.modalContainer}
+          onPress={() => setComments('')}>
+          <View style={styles.modal}>
+            <Text style={styles.modalTitle}>Comments</Text>
+            <Text style={styles.modalDescription}>{comments}</Text>
+          </View>
+        </Pressable>
+      </Modal>
     </View>
   );
 };
@@ -99,6 +136,31 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
     backgroundColor: 'white',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modal: {
+    width: '80%',
+    minHeight: '20%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+    padding: 10,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    alignSelf: 'flex-start',
+  },
+  modalDescription: {
+    fontSize: 18,
+    alignSelf: 'flex-start',
+    margin: 10,
   },
   title: {
     marginTop: 10,
@@ -121,7 +183,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray',
   },
   previewButtonContainer: {
-    backgroundColor: '#4D5057',
+    backgroundColor: 'rgb(225, 225, 225)',
     padding: 10,
     width: '50%',
     alignSelf: 'center',
@@ -130,10 +192,16 @@ const styles = StyleSheet.create({
   },
   previewButton: {
     alignSelf: 'center',
+    color: 'black',
+    fontWeight: '500',
+  },
+  deleteButton: {
+    alignSelf: 'center',
     color: 'white',
+    fontWeight: '500',
   },
   deleteButtonContainer: {
-    backgroundColor: 'red',
+    backgroundColor: 'black',
     padding: 10,
     alignSelf: 'center',
     borderRadius: 20,
@@ -144,8 +212,8 @@ const styles = StyleSheet.create({
   },
   listItem: {
     fontSize: 14,
-    fontWeight: '300',
-    lineHeight: 18,
+    fontWeight: '500',
+    marginBottom: 30,
   },
 });
 

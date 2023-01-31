@@ -23,7 +23,6 @@ const SignInScreen = () => {
         password,
         attributes: {email, name, phone_number: '+1' + phone_number, profile},
       });
-      console.log('Response', response);
       navigation.navigate('ConfirmSignUp', {password: password});
     } catch (e) {
       console.log('Error Signing Up: ', e.message);

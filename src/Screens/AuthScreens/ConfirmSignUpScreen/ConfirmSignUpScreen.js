@@ -65,7 +65,6 @@ function ConfirmSignUpScreen() {
           }),
         );
       }
-      console.log('Response', response);
     } catch (e) {
       console.log('Error Signing In: ', e.message);
     }

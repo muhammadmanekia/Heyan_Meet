@@ -10,17 +10,41 @@ import {
 import React, {useState} from 'react';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {createRSVP} from '../../graphql/mutations';
+// import {
+//   PaymentRequestButtonElement,
+//   useStripe,
+//   useElements,
+// } from '@stripe/stripe-react-native';
+import {useEffect} from 'react';
 
 const RSVPModal = ({handleOnPress, info}) => {
-  console.log(info);
   const [counter, setCounter] = useState(1);
-  const [comments, setComments] = useState(1);
+  const [comments, setComments] = useState('');
+  // const [paymentRequest, setPaymentRequest] = useState(null);
+  // const stripe = useStripe();
+  // const elements = useElements();
 
   function updateCounter(count) {
     if (counter + count !== 0) {
       setCounter(counter + count);
     }
   }
+  // useEffect(() => {
+  //   if (!stripe || !elements) {
+  //     return;
+  //   }
+  //   const pr = stripe.paymentRequest({
+  //     currency: 'usd',
+  //     country: 'US',
+  //     requestPayerEmail: true,
+  //     requestPayerName: true,
+  //     total: {
+  //       label: 'Event Payment',
+  //       amount: info.paymentAmount,
+  //     },
+  //   });
+  //   pr.canMakePayment();
+  // }, [stripe, elements]);
 
   async function handleSubmit() {
     const user = await Auth.currentAuthenticatedUser();
@@ -35,7 +59,6 @@ const RSVPModal = ({handleOnPress, info}) => {
         },
       }),
     );
-    console.log('RESPONSE', response);
     handleOnPress('close');
   }
   return (
@@ -74,7 +97,7 @@ const RSVPModal = ({handleOnPress, info}) => {
               style={styles.input}
               placeholder="Share information with the organizers"
               fontSize={14}
-              onBlur={e => setComments(e)}
+              onChangeText={e => setComments(e)}
             />
           </View>
           <Pressable style={styles.button} onPress={handleSubmit}>

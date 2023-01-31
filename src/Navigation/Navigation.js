@@ -59,6 +59,9 @@ const Navigation = () => {
     return (
       <Tab.Navigator
         screenOptions={({route}) => ({
+          tabBarLabel: () => {
+            return null;
+          },
           headerShown: false,
           tabBarIcon: () => {
             var url;
@@ -81,13 +84,11 @@ const Navigation = () => {
           },
         })}>
         <Tab.Screen
-          name={
-            user.attributes.profile === 'user' ? 'organizations' : 'AdminHome'
-          }
+          name={user.attributes.profile === 'user' ? 'Tabs' : 'AdminHome'}
           component={
             user.attributes.profile === 'user' ? OrgsScreen : AdminEventsScreen
           }
-          initialParams={{orgTitle: user.attributes.name}}
+          initialParams={{orgTitle: user.attributes.name, user: user}}
         />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
@@ -98,8 +99,12 @@ const Navigation = () => {
       <Stack.Navigator>
         {user ? (
           <Stack.Group>
-            <Stack.Screen name="Tabs" component={BottomTabs} />
-            <Stack.Screen name="Organizations" component={OrgsScreen} />
+            <Stack.Screen name="Organizations" component={BottomTabs} />
+            <Stack.Screen
+              name="Tabs"
+              component={OrgsScreen}
+              initialParams={{user: user}}
+            />
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="Events" component={EventsScreen} />
             <Stack.Screen name="EventDetails" component={EventDetailsScreen} />

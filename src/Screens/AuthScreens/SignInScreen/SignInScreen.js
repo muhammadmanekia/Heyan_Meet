@@ -23,11 +23,10 @@ const SignInScreen = () => {
 
     setLoading(true);
     try {
-      const response = await Auth.signIn(data.username, data.password);
+      await Auth.signIn(data.username, data.password);
       // if (response.attributes.profile !== 'user') {
       //   navigation.navigate('AdminHome', {orgTitle: response.attributes.name});
       // }
-      console.log('Response', response);
     } catch (e) {
       console.log('Error Signing In: ', e.message);
     }
