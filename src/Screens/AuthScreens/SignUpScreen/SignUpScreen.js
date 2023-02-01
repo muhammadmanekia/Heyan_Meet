@@ -11,9 +11,11 @@ import {
   Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/core';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
+  const [error, setError] = useState(null);
 
   const onSignUpPressed = async data => {
     const {username, password, email, phone_number, name, profile} = data;
@@ -26,6 +28,7 @@ const SignInScreen = () => {
       navigation.navigate('ConfirmSignUp', {password: password});
     } catch (e) {
       console.log('Error Signing Up: ', e.message);
+      setError(e.message);
     }
   };
 
@@ -41,7 +44,7 @@ const SignInScreen = () => {
       }}
       onSubmit={values => onSignUpPressed(values)}>
       {({handleChange, handleBlur, handleSubmit, values, setFieldValue}) => (
-        <SafeAreaView style={styles.container}>
+        <KeyboardAwareScrollView style={styles.container}>
           <View style={styles.headerTitle}>
             <Image
               source={require('../../../../assets/images/SignInLogo.png')}
@@ -56,6 +59,7 @@ const SignInScreen = () => {
               onChangeText={handleChange('name')}
               onBlur={handleBlur('name')}
               value={values.name}
+              placeholderTextColor="rgba(0,0,0, 0.4)"
             />
             <TextInput
               style={styles.input}
@@ -64,6 +68,7 @@ const SignInScreen = () => {
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
               value={values.email}
+              placeholderTextColor="rgba(0,0,0, 0.4)"
             />
             <TextInput
               style={styles.input}
@@ -72,6 +77,7 @@ const SignInScreen = () => {
               onChangeText={handleChange('username')}
               onBlur={handleBlur('username')}
               value={values.username}
+              placeholderTextColor="rgba(0,0,0, 0.4)"
             />
             <TextInput
               style={styles.input}
@@ -80,6 +86,7 @@ const SignInScreen = () => {
               onChangeText={handleChange('phone_number')}
               onBlur={handleBlur('email')}
               value={values.phone_number}
+              placeholderTextColor="rgba(0,0,0, 0.4)"
             />
             <TextInput
               style={styles.input}
@@ -88,7 +95,7 @@ const SignInScreen = () => {
               onBlur={handleBlur('password')}
               value={values.password}
               secureTextEntry
-              //   placeholderTextColor="rgba(255,255,255, 0.2)"
+              placeholderTextColor="rgba(0,0,0, 0.4)"
             />
             <Text style={styles.radioTitle}>Signing Up As</Text>
             <View style={styles.radio}>
@@ -140,6 +147,23 @@ const SignInScreen = () => {
               </Pressable>
             </View>
           </View>
+          {error ? (
+            <View
+              style={{
+                alignSelf: 'center',
+                width: '80%',
+                marginTop: 20,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}>
+                {error}
+              </Text>
+            </View>
+          ) : null}
           <View style={{alignItems: 'center', margin: 20}}>
             <Pressable onPress={handleSubmit} style={styles.signIn}>
               <Text style={styles.primary}>SIGN UP</Text>
@@ -150,7 +174,7 @@ const SignInScreen = () => {
               <Text style={styles.secondary}>GO BACK TO SIGN IN</Text>
             </Pressable>
           </View>
-        </SafeAreaView>
+        </KeyboardAwareScrollView>
       )}
     </Formik>
   );

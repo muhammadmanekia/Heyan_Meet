@@ -12,11 +12,19 @@ import {
 } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/core';
 import {createOrganization, createUser} from '../../../graphql/mutations';
+import {useRef} from 'react';
 
 function ConfirmSignUpScreen() {
   const navigation = useNavigation();
   const route = useRoute();
   const [loading, setLoading] = useState(false);
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const onConfirmSignUp = async data => {
     if (loading) {
@@ -24,49 +32,53 @@ function ConfirmSignUpScreen() {
     }
 
     setLoading(true);
-    try {
-      const response = await Auth.confirmSignUp(data.username, data.code);
-      await Auth.signIn({
-        username: data.username,
-        password: route.params.password,
-      });
+    if (isMounted.current) {
+      try {
+        const response = await Auth.confirmSignUp(data.username, data.code);
+        await Auth.signIn({
+          username: data.username,
+          password: route.params.password,
+        });
 
-      const thisUser = await Auth.currentAuthenticatedUser({bypassCache: true});
-      if (thisUser.attributes.profile === 'organization') {
-        await API.graphql(
-          graphqlOperation(createOrganization, {
-            input: {
-              id: thisUser.attributes.sub,
-              name: thisUser.attributes.name,
-              email: thisUser.attributes.email,
-            },
-          }),
-        );
+        const thisUser = await Auth.currentAuthenticatedUser({
+          bypassCache: true,
+        });
+        if (thisUser.attributes.profile === 'organization') {
+          await API.graphql(
+            graphqlOperation(createOrganization, {
+              input: {
+                id: thisUser.attributes.sub,
+                name: thisUser.attributes.name,
+                email: thisUser.attributes.email,
+              },
+            }),
+          );
+        }
+        if (thisUser.attributes.profile === 'user') {
+          await API.graphql(
+            graphqlOperation(createUser, {
+              input: {
+                id: thisUser.attributes.sub,
+                name: thisUser.attributes.name,
+                email: thisUser.attributes.email,
+              },
+            }),
+          );
+        }
+        if (thisUser.attributes.profile === 'user') {
+          await API.graphql(
+            graphqlOperation(createUser, {
+              input: {
+                id: thisUser.attributes.sub,
+                name: thisUser.attributes.name,
+                email: thisUser.attributes.email,
+              },
+            }),
+          );
+        }
+      } catch (e) {
+        console.log('Error Signing In: ', e.message);
       }
-      if (thisUser.attributes.profile === 'user') {
-        await API.graphql(
-          graphqlOperation(createUser, {
-            input: {
-              id: thisUser.attributes.sub,
-              name: thisUser.attributes.name,
-              email: thisUser.attributes.email,
-            },
-          }),
-        );
-      }
-      if (thisUser.attributes.profile === 'user') {
-        await API.graphql(
-          graphqlOperation(createUser, {
-            input: {
-              id: thisUser.attributes.sub,
-              name: thisUser.attributes.name,
-              email: thisUser.attributes.email,
-            },
-          }),
-        );
-      }
-    } catch (e) {
-      console.log('Error Signing In: ', e.message);
     }
     setLoading(false);
   };

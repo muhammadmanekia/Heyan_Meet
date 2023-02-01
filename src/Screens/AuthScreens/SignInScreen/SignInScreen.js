@@ -15,6 +15,7 @@ import {useNavigation} from '@react-navigation/core';
 const SignInScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const onSignInPressed = async data => {
     if (loading) {
@@ -29,6 +30,7 @@ const SignInScreen = () => {
       // }
     } catch (e) {
       console.log('Error Signing In: ', e.message);
+      setError(true);
     }
     setLoading(false);
   };
@@ -53,8 +55,7 @@ const SignInScreen = () => {
               onChangeText={handleChange('username')}
               onBlur={handleBlur('username')}
               value={values.username}
-
-              //   placeholderTextColor="rgba(255,255,255, 0.2)"
+              placeholderTextColor="rgba(0,0,0, 0.4)"
             />
             <TextInput
               style={styles.input}
@@ -63,9 +64,25 @@ const SignInScreen = () => {
               onBlur={handleBlur('password')}
               value={values.password}
               secureTextEntry
-              //   placeholderTextColor="rgba(255,255,255, 0.2)"
+              placeholderTextColor="rgba(0,0,0, 0.4)"
             />
           </View>
+          {error ? (
+            <View
+              style={{
+                alignSelf: 'center',
+                width: '80%',
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}>
+                Your username or password is incorrect
+              </Text>
+            </View>
+          ) : null}
           <View style={{alignItems: 'center', margin: 20}}>
             <Pressable
               //   disabled={email !== '' && password !== '' ? false : true}

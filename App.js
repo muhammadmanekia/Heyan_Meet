@@ -1,5 +1,14 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {
+  Keyboard,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 import {Amplify} from 'aws-amplify';
 import awsconfig from './src/aws-exports';
@@ -15,12 +24,14 @@ Text.defaultProps.style = {fontFamily: 'Roboto'};
 
 function App() {
   return (
-    <View style={styles.container}>
-      <Navigation />
-      {/* <Auth /> */}
-      {/* <SignInScreen /> */}
-      <StatusBar style="auto" />
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <Navigation />
+        {/* <Auth /> */}
+        {/* <SignInScreen /> */}
+        <StatusBar style="auto" />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
