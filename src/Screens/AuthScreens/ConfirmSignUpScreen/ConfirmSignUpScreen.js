@@ -13,6 +13,7 @@ import {
 import {useNavigation, useRoute} from '@react-navigation/core';
 import {createOrganization, createUser} from '../../../graphql/mutations';
 import {useRef} from 'react';
+import {useEffect} from 'react';
 
 function ConfirmSignUpScreen() {
   const navigation = useNavigation();
@@ -106,6 +107,7 @@ function ConfirmSignUpScreen() {
               onChangeText={handleChange('username')}
               onBlur={handleBlur('username')}
               value={values.username}
+              placeholderTextColor="rgba(0,0,0, 0.4)"
             />
             <TextInput
               style={styles.input}
@@ -114,6 +116,7 @@ function ConfirmSignUpScreen() {
               onChangeText={handleChange('code')}
               onBlur={handleBlur('code')}
               value={values.code}
+              placeholderTextColor="rgba(0,0,0, 0.4)"
             />
             <View style={{alignItems: 'center', margin: 20}}>
               <Pressable onPress={handleSubmit} style={styles.signIn}>

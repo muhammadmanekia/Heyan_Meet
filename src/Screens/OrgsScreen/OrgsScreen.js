@@ -84,25 +84,31 @@ const OrgsScreen = () => {
           </Pressable>
         )}
       </View>
-      <FlatList
-        data={subscribed}
-        renderItem={({item}) => (
-          <Pressable
-            onPress={() =>
-              navigation.navigate('Events', {
-                orgTitle: item.Organization.name,
-                orgId: item.Organization.id,
-                showRSVP: true,
-              })
-            }>
-            <OrgListItem
-              org={item}
-              deleteToggle={deleteToggle}
-              handleDelete={handleDelete}
-            />
-          </Pressable>
-        )}
-      />
+      {subscribed.length > 0 ? (
+        <FlatList
+          data={subscribed}
+          renderItem={({item}) => (
+            <Pressable
+              onPress={() =>
+                navigation.navigate('Events', {
+                  orgTitle: item.Organization.name,
+                  orgId: item.Organization.id,
+                  showRSVP: true,
+                })
+              }>
+              <OrgListItem
+                org={item}
+                deleteToggle={deleteToggle}
+                handleDelete={handleDelete}
+              />
+            </Pressable>
+          )}
+        />
+      ) : (
+        <Text style={{textAlign: 'center', padding: 10}}>
+          You haven't subscribed to any organizations
+        </Text>
+      )}
       <Pressable
         style={styles.searchContainer}
         onPress={() =>

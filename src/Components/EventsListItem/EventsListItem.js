@@ -9,23 +9,30 @@ import {
 } from 'react-native';
 import React from 'react';
 import {S3Image} from 'aws-amplify-react-native/dist/Storage';
+import {useEffect} from 'react';
+import {useState} from 'react';
+import {Storage} from 'aws-amplify';
+import FastImage from 'react-native-fast-image';
 
 const EventsListItem = ({event, handleOnPress, showRSVP}) => {
   function handleRSVPPress() {
     handleOnPress(event);
   }
+  const [banner, setBanner] = useState();
+  useEffect(() => {
+    const downloadImg = async () => {
+      var getBanner = await Storage.get(event.banner);
+      setBanner(getBanner);
+      console.log(banner);
+    };
+    downloadImg();
+  }, []);
+
   return (
     <View>
       <View style={styles.container}>
         <View style={{height: 190}}>
-          <S3Image
-            imgKey={event.banner}
-            style={styles.image}
-            imageStyle={{
-              borderRadius: 30,
-              resizeMode: 'cover',
-            }}
-          />
+          <Image source={{uri: banner}} style={styles.image} />
         </View>
         <View style={styles.description}>
           <Text style={styles.title}>{event.title}</Text>

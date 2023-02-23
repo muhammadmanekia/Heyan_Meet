@@ -17,6 +17,7 @@
 		2660326FBE2240FC88A046A2 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 40436B979F004F02B48DFC37 /* Roboto-MediumItalic.ttf */; };
 		29955D2AA63A44D2BF97789E /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CBDC2EFF69F40A5A485DE1E /* Roboto-Light.ttf */; };
 		3026B01175E647B8A4BC2B04 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3C469F0AF0042349C5FC991 /* Roboto-LightItalic.ttf */; };
+		35F4D06D3774449D970B1CBA /* PoiretOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75297F6E89DE422897660440 /* PoiretOne-Regular.ttf */; };
 		51DA3C48215443CCA45E1794 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72AD1931692F4EC0928FC509 /* Roboto-BlackItalic.ttf */; };
 		6C33DE260C1146378D7C1056 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7EF219E75D144A6B74F0735 /* Roboto-BoldItalic.ttf */; };
 		71012FB7A39A424EA78F988D /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00AB3B531505479BB1C29B8D /* Roboto-Bold.ttf */; };
@@ -59,6 +60,7 @@
 		5B7EB9410499542E8C5724F5 /* Pods-Heyan_Meet-Heyan_MeetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heyan_Meet-Heyan_MeetTests.debug.xcconfig"; path = "Target Support Files/Pods-Heyan_Meet-Heyan_MeetTests/Pods-Heyan_Meet-Heyan_MeetTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Heyan_Meet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Heyan_Meet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72AD1931692F4EC0928FC509 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../assets/fonts/Roboto/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
+		75297F6E89DE422897660440 /* PoiretOne-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PoiretOne-Regular.ttf"; path = "../assets/fonts/PoiretOne/PoiretOne-Regular.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Heyan_Meet/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Heyan_Meet-Heyan_MeetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heyan_Meet-Heyan_MeetTests.release.xcconfig"; path = "Target Support Files/Pods-Heyan_Meet-Heyan_MeetTests/Pods-Heyan_Meet-Heyan_MeetTests.release.xcconfig"; sourceTree = "<group>"; };
 		9FC4F2E66B9A40608C8046A3 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto/Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				9FC4F2E66B9A40608C8046A3 /* Roboto-Regular.ttf */,
 				FF0EE797994845FAA35F2228 /* Roboto-Thin.ttf */,
 				4DEF11FD50EF475B957822C1 /* Roboto-ThinItalic.ttf */,
+				75297F6E89DE422897660440 /* PoiretOne-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				CE9A2E25FF044E97954B268B /* Roboto-Regular.ttf in Resources */,
 				953567E22A93420CB6264CEE /* Roboto-Thin.ttf in Resources */,
 				751C0B70131D45A99ACE93EA /* Roboto-ThinItalic.ttf in Resources */,
+				35F4D06D3774449D970B1CBA /* PoiretOne-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,7 +548,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7NDK9CS2KT;
 				ENABLE_BITCODE = NO;
@@ -578,7 +582,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7NDK9CS2KT;
 				INFOPLIST_FILE = Heyan_Meet/Info.plist;

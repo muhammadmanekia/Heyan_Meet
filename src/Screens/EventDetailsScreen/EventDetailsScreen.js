@@ -3,6 +3,9 @@ import React, {useState} from 'react';
 import RSVPModal from '../../Components/RSVPModal/RSVPModal';
 import {useRoute} from '@react-navigation/core';
 import {S3Image} from 'aws-amplify-react-native/dist/Storage';
+import FastImage from 'react-native-fast-image';
+import {useEffect} from 'react';
+import {Storage} from 'aws-amplify';
 
 const EventDetailsScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -10,6 +13,15 @@ const EventDetailsScreen = () => {
   const route = useRoute();
 
   const {thisEvent} = route.params;
+
+  const [banner, setBanner] = useState();
+  useEffect(() => {
+    const downloadImg = async () => {
+      var getBanner = await Storage.get(thisEvent.banner);
+      setBanner(getBanner);
+    };
+    downloadImg();
+  }, []);
 
   function handleOnPress() {
     requestAnimationFrame(() => {
@@ -19,11 +31,16 @@ const EventDetailsScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{thisEvent.title}</Text>
-      <S3Image
-        imgKey={thisEvent.banner}
+      <FastImage
+        source={{uri: banner, priority: FastImage.priority.normal}}
         style={styles.image}
         resizeMode="cover"
       />
+      {/* <S3Image
+        imgKey={thisEvent.banner}
+        style={styles.image}
+        resizeMode="cover"
+      /> */}
       <View style={styles.infoContainer}>
         <View style={styles.info}>
           <Image
@@ -83,6 +100,8 @@ const styles = StyleSheet.create({
   image: {
     aspectRatio: 1 / 1,
     marginVertical: 10,
+    width: '100%',
+    alignContent: 'center',
   },
   icon: {
     width: 20,

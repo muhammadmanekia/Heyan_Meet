@@ -96,7 +96,15 @@ const Navigation = () => {
   };
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          // headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontFamily: 'PoiretOne-Regular',
+          },
+          headerTitle: 'heyan',
+        }}>
         {user ? (
           <Stack.Group>
             <Stack.Screen name="Organizations" component={BottomTabs} />

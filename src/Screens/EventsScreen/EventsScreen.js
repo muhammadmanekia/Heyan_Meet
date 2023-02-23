@@ -11,13 +11,14 @@ import React, {useState, useEffect} from 'react';
 import EventsListItem from '../../Components/EventsListItem/EventsListItem';
 import RSVPModal from '../../Components/RSVPModal/RSVPModal';
 import {useNavigation, useRoute} from '@react-navigation/core';
-import {API, Auth, graphqlOperation} from 'aws-amplify';
+import {API, Auth, graphqlOperation, Storage} from 'aws-amplify';
 import {listEvents} from '../../graphql/queries';
 import {useIsFocused} from '@react-navigation/native';
 
 const EventsScreen = ({showRSVP}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [eventBanners, setEventBanners] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const route = useRoute();
@@ -46,7 +47,8 @@ const EventsScreen = ({showRSVP}) => {
       const events = await API.graphql(graphqlOperation(listEvents));
       if (checkAPISubscribed) {
         var eventsArr = [];
-        events.data.listEvents.items.map(e => {
+        var eventBanner = [];
+        events.data.listEvents.items.map(async e => {
           if (!e._deleted) {
             if (orgId) {
               if (orgId == e.organizationID) {

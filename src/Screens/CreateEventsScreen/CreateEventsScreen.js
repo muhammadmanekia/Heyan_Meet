@@ -46,7 +46,7 @@ const CreateEventsScreen = () => {
       description: '',
       banner: '',
       paymentAmount: '',
-      organizationID: user.sub,
+      organizationID: user.attributes.sub,
     },
     onSubmit: async values => {
       setLoading(true);
