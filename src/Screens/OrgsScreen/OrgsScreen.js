@@ -1,4 +1,12 @@
-import {View, Text, FlatList, StyleSheet, Pressable, Image} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Pressable,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import orgs from '../../../assets/data/orgs.json';
 import OrgListItem from '../../Components/OrgListItem/OrgListItem';
@@ -11,6 +19,7 @@ import {deleteSubscribe} from '../../graphql/mutations';
 const OrgsScreen = () => {
   const navigation = useNavigation();
   const [subscribed, setSubscribed] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [deleteToggle, setDeleteToggle] = useState(false);
 
   const route = useRoute();
@@ -37,13 +46,15 @@ const OrgsScreen = () => {
   }
 
   useEffect(() => {
+    if (loading) {
+      return;
+    }
     let checkAPISubscribed = true;
+    setLoading(true);
+
     async function getUser() {
       var subsArr = [];
       if (checkAPISubscribed) {
-        // const thisUser = await Auth.currentAuthenticatedUser({
-        //   bypassCache: true,
-        // });
         const _subscribed = await API.graphql(
           graphqlOperation(listSubscribes, {
             filter: {userID: {eq: user && user.attributes.sub}},
@@ -54,8 +65,9 @@ const OrgsScreen = () => {
             subsArr.push(sub);
           }
         });
-        // setUser(thisUser);
         setSubscribed(subsArr);
+        // subscribed.map(sub => console.log(sub.Organization.email));
+        setLoading(false);
       }
     }
     getUser();
@@ -66,6 +78,7 @@ const OrgsScreen = () => {
 
   return (
     <View style={styles.container}>
+      {loading && <ActivityIndicator />}
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={styles.title}>Organizations</Text>
         {subscribed.length > 0 && (
@@ -75,11 +88,11 @@ const OrgsScreen = () => {
             <Text
               style={{
                 color: 'white',
-                fontWeight: deleteToggle ? '600' : '900',
+                fontWeight: '600',
                 fontSize: 16,
                 textAlign: 'center',
               }}>
-              {deleteToggle ? 'cancel' : '-'}
+              {deleteToggle ? 'cancel' : 'unsubscribe'}
             </Text>
           </Pressable>
         )}
@@ -150,9 +163,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     marginBottom: 20,
     borderRadius: 25,
-    width: 60,
     height: 20,
     marginRight: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
     alignSelf: 'center',
     alignItems: 'center',
     paddingVertical: 'auto',

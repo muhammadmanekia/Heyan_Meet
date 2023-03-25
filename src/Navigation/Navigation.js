@@ -102,8 +102,11 @@ const Navigation = () => {
           headerTitleStyle: {
             fontWeight: 'bold',
             fontFamily: 'PoiretOne-Regular',
+
+            fontSize: 30,
           },
           headerTitle: 'heyan',
+          headerBackTitle: ' ',
         }}>
         {user ? (
           <Stack.Group>

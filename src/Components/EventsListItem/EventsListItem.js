@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Button,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import {S3Image} from 'aws-amplify-react-native/dist/Storage';
@@ -14,28 +15,34 @@ import {useState} from 'react';
 import {Storage} from 'aws-amplify';
 import FastImage from 'react-native-fast-image';
 
-const EventsListItem = ({event, handleOnPress, showRSVP}) => {
+const EventsListItem = ({event, handleOnPress, showRSVP, setRSVP}) => {
+  const [rsvpd, setRsvpd] = useState(false);
+
   function handleRSVPPress() {
     handleOnPress(event);
   }
+
   const [banner, setBanner] = useState();
   useEffect(() => {
     const downloadImg = async () => {
       var getBanner = await Storage.get(event.banner);
       setBanner(getBanner);
-      console.log(banner);
     };
     downloadImg();
-  }, []);
+
+    setRsvpd(event.rsvpd);
+  }, [event]);
 
   return (
     <View>
       <View style={styles.container}>
-        <View style={{height: 190}}>
-          <Image source={{uri: banner}} style={styles.image} />
+        <View style={styles.bannerContainer}>
+          <Image source={{uri: banner}} style={styles.bannerImage} />
         </View>
         <View style={styles.description}>
-          <Text style={styles.title}>{event.title}</Text>
+          <Text style={styles.title} adjustsFontSizeToFit>
+            {event.title}
+          </Text>
           <View style={styles.specs}>
             <View style={styles.address}>
               <Image
@@ -58,15 +65,20 @@ const EventsListItem = ({event, handleOnPress, showRSVP}) => {
               </Text>
             </View>
           </View>
-          {showRSVP && (
-            <View style={styles.buttonWrap}>
-              <Pressable>
-                <Text style={styles.button} onPress={handleRSVPPress}>
-                  RSVP
-                </Text>
-              </Pressable>
-            </View>
-          )}
+          {showRSVP &&
+            (!rsvpd ? (
+              <View style={styles.buttonWrap}>
+                <Pressable onPress={handleRSVPPress}>
+                  <Text style={styles.button}>RSVP</Text>
+                </Pressable>
+              </View>
+            ) : (
+              <View style={styles.disabledButtonWrap}>
+                <Pressable onPress={handleRSVPPress}>
+                  <Text style={styles.disabledButton}>RSVP'D</Text>
+                </Pressable>
+              </View>
+            ))}
         </View>
         {event.paymentAmount ? (
           <View style={styles.paymentWrap}>
@@ -88,14 +100,14 @@ const styles = StyleSheet.create({
   container: {
     alignSelf: 'center',
     justifyContent: 'center',
-    // shadowColor: '#000',
-    // shadowOffset: {width: 0, height: 0},
-    // shadowOpacity: 0.1,
-    // shadowRadius: 2,
+    backgroundColor: 'white',
     marginVertical: 2,
     width: '100%',
   },
-  image: {
+  bannerContainer: {
+    height: 190,
+  },
+  bannerImage: {
     alignSelf: 'center',
     justifyContent: 'center',
     width: '100%',
@@ -123,9 +135,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     textAlign: 'center',
-    margin: 8,
+    marginVertical: 10,
     textTransform: 'uppercase',
     fontWeight: 'bold',
   },
@@ -153,17 +165,34 @@ const styles = StyleSheet.create({
   },
   buttonWrap: {
     backgroundColor: 'black',
-    width: 50,
-    height: 50,
-    borderRadius: 15,
+    width: 80,
+    height: 40,
+    borderRadius: 25,
     position: 'absolute',
-    left: '88%',
-    top: '5%',
+    right: 0,
+    top: -40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  disabledButtonWrap: {
+    backgroundColor: 'lightgray',
+    width: 80,
+    height: 40,
+    borderRadius: 25,
+    position: 'absolute',
+    right: 0,
+    top: -40,
     alignItems: 'center',
     justifyContent: 'center',
   },
   button: {
     color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textTransform: 'uppercase',
+  },
+  disabledButton: {
+    color: 'black',
     fontWeight: 'bold',
   },
   paymentWrap: {

@@ -20,7 +20,7 @@ const SettingsScreen = () => {
       const authUser = await Auth.currentAuthenticatedUser({bypassCache: true});
       if (userInfo) {
         setUser(authUser);
-        setNewAttributes(authUser.attributes);
+        setNewAttributes({...authUser.attributes, username: authUser.username});
       }
     }
     getUser();
@@ -64,6 +64,17 @@ const SettingsScreen = () => {
             style={styles.input}
             value={newAttributes && newAttributes.name}
             onChangeText={e => setNewAttributes({...newAttributes, name: e})}
+          />
+        </View>
+        <View>
+          <Text>Username</Text>
+          <TextInput
+            id="username"
+            style={styles.input}
+            value={newAttributes && newAttributes.username}
+            onChangeText={e =>
+              setNewAttributes({...newAttributes, username: e})
+            }
           />
         </View>
         <View>

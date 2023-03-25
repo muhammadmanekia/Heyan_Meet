@@ -19,10 +19,12 @@ import {createEvent} from '../../graphql/mutations';
 import {useRoute} from '@react-navigation/core';
 import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
+import ImageResizer from '@bam.tech/react-native-image-resizer';
 
 const CreateEventsScreen = () => {
   const [date, setDate] = useState(new Date());
   const [screenCount, setScreenCount] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   const [data, setData] = useState({
@@ -56,10 +58,13 @@ const CreateEventsScreen = () => {
       try {
         await API.graphql(graphqlOperation(createEvent, {input: values}));
       } catch (e) {
+        setErrorMessage(e.errors[0].message);
         console.error(e);
       }
       setLoading(false);
-      navigation.navigate('AdminHome');
+      {
+        errorMessage == '' ? navigation.navigate('AdminHome') : null;
+      }
     },
   });
 
@@ -70,7 +75,26 @@ const CreateEventsScreen = () => {
       includeBase64: false,
     };
     const uri = await ImagePicker.launchImageLibrary(options);
-    formikProps.setFieldValue('banner', uri.assets[0].uri);
+    // console.log(uri.assets);
+    if (uri.assets[0].uri) {
+      await ImageResizer.createResizedImage(
+        uri.assets[0].uri,
+        800,
+        800,
+        'JPEG',
+        100,
+        0,
+        undefined,
+        false,
+      )
+        .then(response => {
+          // console.log('RESPONSE', response);
+          formikProps.setFieldValue('banner', response.uri);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   }, []);
 
   const uploadFile = async fileUri => {
@@ -103,6 +127,7 @@ const CreateEventsScreen = () => {
       ) : (
         <RSVPDetails formikProps={formikProps} />
       )}
+      {errorMessage !== '' ? <Text>{errorMessage}</Text> : null}
       <ActivityIndicator animating={loading} size="large" />
     </View>
   );

@@ -2,13 +2,14 @@ import {View, Text, Image, StyleSheet, Pressable, Modal} from 'react-native';
 import React, {useState} from 'react';
 import RSVPModal from '../../Components/RSVPModal/RSVPModal';
 import {useRoute} from '@react-navigation/core';
-import {S3Image} from 'aws-amplify-react-native/dist/Storage';
 import FastImage from 'react-native-fast-image';
 import {useEffect} from 'react';
 import {Storage} from 'aws-amplify';
 
 const EventDetailsScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
+  const [rsvpd, setRsvpd] = useState(false);
 
   const route = useRoute();
 
@@ -21,26 +22,26 @@ const EventDetailsScreen = () => {
       setBanner(getBanner);
     };
     downloadImg();
-  }, []);
+    setRsvpd(thisEvent.rsvpd);
+  }, [thisEvent, reloadKey]);
 
-  function handleOnPress() {
+  function handleOnPress(event) {
     requestAnimationFrame(() => {
       setModalVisible(!modalVisible);
     });
   }
+  function handleReload() {
+    setReloadKey(reloadKey + 1);
+  }
   return (
-    <View style={styles.container}>
+    <View style={styles.container} key={reloadKey}>
       <Text style={styles.title}>{thisEvent.title}</Text>
       <FastImage
         source={{uri: banner, priority: FastImage.priority.normal}}
         style={styles.image}
         resizeMode="cover"
       />
-      {/* <S3Image
-        imgKey={thisEvent.banner}
-        style={styles.image}
-        resizeMode="cover"
-      /> */}
+
       <View style={styles.infoContainer}>
         <View style={styles.info}>
           <Image
@@ -63,20 +64,30 @@ const EventDetailsScreen = () => {
             {new Date(thisEvent.startDateTime).toLocaleTimeString()}
           </Text>
         </View>
-        <View style={styles.buttonWrap}>
-          <Pressable>
-            <Text style={styles.button} onPress={handleOnPress}>
-              RSVP
-            </Text>
-          </Pressable>
-        </View>
+        {!rsvpd ? (
+          <View style={styles.buttonWrap}>
+            <Pressable onPress={handleOnPress}>
+              <Text style={styles.button}>RSVP</Text>
+            </Pressable>
+          </View>
+        ) : (
+          <View style={styles.disabledButtonWrap}>
+            <Pressable onPress={handleOnPress}>
+              <Text style={styles.disabledButton}>RSVPD</Text>
+            </Pressable>
+          </View>
+        )}
       </View>
       <View style={styles.descriptionContainer}>
         <Text style={styles.descriptionTitle}>Description</Text>
         <Text style={styles.description}>{thisEvent.description}</Text>
       </View>
       <Modal transparent visible={modalVisible}>
-        <RSVPModal handleOnPress={handleOnPress} info={thisEvent} />
+        <RSVPModal
+          handleOnPress={handleOnPress}
+          handleReload={handleReload}
+          info={thisEvent}
+        />
       </Modal>
     </View>
   );
@@ -85,8 +96,6 @@ const EventDetailsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // padding: 20,
-    // justifyContent: 'center',
     backgroundColor: 'white',
   },
   title: {
@@ -99,9 +108,9 @@ const styles = StyleSheet.create({
   },
   image: {
     aspectRatio: 1 / 1,
-    marginVertical: 10,
+    marginVertical: 20,
     width: '100%',
-    alignContent: 'center',
+    alignSelf: 'center',
   },
   icon: {
     width: 20,
@@ -112,6 +121,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     margin: 2,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   infoContainer: {
     borderBottomColor: 'black',
@@ -121,26 +132,42 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   descriptionTitle: {
-    fontSize: 16,
-    marginBottom: 5,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   description: {
-    fontSize: 12,
-    lineHeight: 18,
+    fontSize: 16,
+    lineHeight: 24,
   },
   buttonWrap: {
-    backgroundColor: '#000',
-    width: 50,
-    height: 50,
-    borderRadius: 15,
+    backgroundColor: 'black',
+    width: 100,
+    height: 40,
+    borderRadius: 20,
     position: 'absolute',
-    left: '85%',
-    top: '10%',
+    right: 20,
+    top: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  disabledButtonWrap: {
+    backgroundColor: '#ccc',
+    width: 100,
+    height: 40,
+    borderRadius: 20,
+    position: 'absolute',
+    right: 20,
+    top: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   button: {
     color: 'white',
+    fontWeight: 'bold',
+  },
+  disabledButton: {
+    color: '#333',
     fontWeight: 'bold',
   },
 });

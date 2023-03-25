@@ -12,14 +12,14 @@ import EventsListItem from '../../Components/EventsListItem/EventsListItem';
 import RSVPModal from '../../Components/RSVPModal/RSVPModal';
 import {useNavigation, useRoute} from '@react-navigation/core';
 import {API, Auth, graphqlOperation, Storage} from 'aws-amplify';
-import {listEvents} from '../../graphql/queries';
+import {listEvents, getUser, listRSVPS} from '../../graphql/queries';
 import {useIsFocused} from '@react-navigation/native';
 
 const EventsScreen = ({showRSVP}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [filteredEvents, setFilteredEvents] = useState([]);
-  const [eventBanners, setEventBanners] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
 
   const route = useRoute();
   const navigation = useNavigation();
@@ -38,6 +38,10 @@ const EventsScreen = ({showRSVP}) => {
     });
   }
 
+  function handleReload() {
+    setReloadKey(reloadKey + 1);
+  }
+
   useEffect(() => {
     let checkAPISubscribed = true;
 
@@ -45,6 +49,11 @@ const EventsScreen = ({showRSVP}) => {
       setLoading(true);
       const user = await Auth.currentAuthenticatedUser({bypassCache: true});
       const events = await API.graphql(graphqlOperation(listEvents));
+      const rsvps = await API.graphql(
+        graphqlOperation(listRSVPS, {
+          filter: {userID: {eq: user.attributes.sub}},
+        }),
+      );
       if (checkAPISubscribed) {
         var eventsArr = [];
         var eventBanner = [];
@@ -61,6 +70,19 @@ const EventsScreen = ({showRSVP}) => {
             }
           }
         });
+        eventsArr.map(e => {
+          e.rsvpd = false;
+          e.rsvpID = '';
+          e.rsvpVersion = null;
+
+          rsvps?.data?.listRSVPS?.items.map(item => {
+            if (item.eventID === e.id && item._deleted !== true) {
+              e.rsvpd = true;
+              e.rsvpID = item.id;
+              e.rsvpVersion = item._version;
+            }
+          });
+        });
         setFilteredEvents(eventsArr);
         setLoading(false);
       }
@@ -71,10 +93,10 @@ const EventsScreen = ({showRSVP}) => {
       checkAPISubscribed = false;
       setLoading(false);
     };
-  }, [isFocused]);
+  }, [isFocused, reloadKey]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} key={reloadKey}>
       {loading ? (
         <ActivityIndicator animating={loading} size="large" />
       ) : (
@@ -98,7 +120,11 @@ const EventsScreen = ({showRSVP}) => {
           />
           {route.params.showRSVP && (
             <Modal transparent visible={modalVisible}>
-              <RSVPModal handleOnPress={handleOnPress} info={rsvpInfo} />
+              <RSVPModal
+                handleOnPress={handleOnPress}
+                handleReload={handleReload}
+                info={rsvpInfo}
+              />
             </Modal>
           )}
         </View>
@@ -112,7 +138,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'white',
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 24,

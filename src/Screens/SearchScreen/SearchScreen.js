@@ -36,7 +36,7 @@ const SearchScreen = () => {
     listOrgs();
   }, []);
 
-  const handleSubmit = item => {
+  const handleSubmit = async item => {
     if (
       subscribed
         .map(sub => {
@@ -52,7 +52,8 @@ const SearchScreen = () => {
       userID: user && user.sub,
       organizationID: item.id,
     };
-    API.graphql(graphqlOperation(createSubscribe, {input: inputField}));
+    await API.graphql(graphqlOperation(createSubscribe, {input: inputField}));
+
     navigation.goBack();
   };
   const searchItems = searchValue => {

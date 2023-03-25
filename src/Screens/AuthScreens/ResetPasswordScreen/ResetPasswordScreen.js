@@ -66,8 +66,7 @@ const ResetPasswordScreen = () => {
                   onChangeText={handleChange('code')}
                   onBlur={handleBlur('code')}
                   value={values.code}
-
-                  //   placeholderTextColor="rgba(255,255,255, 0.2)"
+                  placeholderTextColor="rgba(0,0,0, 0.4)"
                 />
                 <TextInput
                   style={styles.input}
@@ -76,7 +75,7 @@ const ResetPasswordScreen = () => {
                   onBlur={handleBlur('password')}
                   value={values.password}
                   secureTextEntry
-                  //   placeholderTextColor="rgba(255,255,255, 0.2)"
+                  placeholderTextColor="rgba(0,0,0, 0.4)"
                 />
               </View>
               <View style={{alignItems: 'center', margin: 20}}>
@@ -105,8 +104,7 @@ const ResetPasswordScreen = () => {
                   onChangeText={handleChange('username')}
                   onBlur={handleBlur('username')}
                   value={values.username}
-
-                  //   placeholderTextColor="rgba(255,255,255, 0.2)"
+                  placeholderTextColor="rgba(0,0,0, 0.4)"
                 />
               </View>
               <View style={{alignItems: 'center', margin: 20}}>
