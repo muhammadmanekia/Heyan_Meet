@@ -1,0 +1,6 @@
+{
+  "AppSyncApiName": "HeyanMeet",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2023-03-17T19:07:25.119Z"
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "organization": "Momin Center",
+    "details": {
+      "image": "https://momin.org/news/uploads/JUmma%202022.jpeg",
+      "title": "Jumma Salaat",
+      "location": "Momin Center",
+      "date": "Nov 4 2022"
+    }
+  },
+  {
+    "id": 2,
+    "organization": "Momin Center",
+    "details": {
+      "image": "https://momindfw.org/wp-content/uploads/2022/01/WhatsApp-Image-2022-01-11-at-2.22.47-PM.jpeg",
+      "title": "Dua E Kumayl",
+      "location": "Momin Center",
+      "date": "Nov 4 2022"
+    }
+  },
+  {
+    "id": 3,
+    "organization": "Momin Center",
+    "details": {
+      "image": "https://pbs.twimg.com/media/FeVTdE_WYAEWK2X?format=jpg&name=large",
+      "title": "Eid E Zehra",
+      "location": "Momin Center",
+      "date": "Nov 4 2022"
+    }
+  },
+  {
+    "id": 4,
+    "organization": "City of Knowledge",
+    "details": {
+      "image": "https://pbs.twimg.com/media/FeVTdE_WYAEWK2X?format=jpg&name=large",
+      "title": "Eid E Zehra",
+      "location": "Anjuman e Sarkar e Wafa",
+      "date": "Nov 4 2022"
+    }
+  }
+]

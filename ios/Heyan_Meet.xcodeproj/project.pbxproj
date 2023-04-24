@@ -8,12 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* Heyan_MeetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Heyan_MeetTests.m */; };
+		05A7CD57678F41499E475982 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 515E5F3C590A4AADB0399927 /* Roboto-Italic.ttf */; };
+		0667E5A08B604B26BEEE4B37 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C0589A33FAD04EC8B712E02E /* Roboto-Black.ttf */; };
 		0C80B921A6F3F58F76C31292 /* libPods-Heyan_Meet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Heyan_Meet.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2660326FBE2240FC88A046A2 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 40436B979F004F02B48DFC37 /* Roboto-MediumItalic.ttf */; };
+		29955D2AA63A44D2BF97789E /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CBDC2EFF69F40A5A485DE1E /* Roboto-Light.ttf */; };
+		3026B01175E647B8A4BC2B04 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3C469F0AF0042349C5FC991 /* Roboto-LightItalic.ttf */; };
+		35F4D06D3774449D970B1CBA /* PoiretOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75297F6E89DE422897660440 /* PoiretOne-Regular.ttf */; };
+		51DA3C48215443CCA45E1794 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72AD1931692F4EC0928FC509 /* Roboto-BlackItalic.ttf */; };
+		6C33DE260C1146378D7C1056 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7EF219E75D144A6B74F0735 /* Roboto-BoldItalic.ttf */; };
+		71012FB7A39A424EA78F988D /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00AB3B531505479BB1C29B8D /* Roboto-Bold.ttf */; };
+		751C0B70131D45A99ACE93EA /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DEF11FD50EF475B957822C1 /* Roboto-ThinItalic.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-Heyan_Meet-Heyan_MeetTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Heyan_Meet-Heyan_MeetTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		953567E22A93420CB6264CEE /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0EE797994845FAA35F2228 /* Roboto-Thin.ttf */; };
+		B05682C700184168B5E34677 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C595B7E4B0DD464BA412AD05 /* Roboto-Medium.ttf */; };
+		CE9A2E25FF044E97954B268B /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FC4F2E66B9A40608C8046A3 /* Roboto-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00AB3B531505479BB1C29B8D /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* Heyan_MeetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Heyan_MeetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* Heyan_MeetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Heyan_MeetTests.m; sourceTree = "<group>"; };
@@ -37,13 +51,25 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Heyan_Meet/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Heyan_Meet/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Heyan_Meet-Heyan_MeetTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Heyan_Meet-Heyan_MeetTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CBDC2EFF69F40A5A485DE1E /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../assets/fonts/Roboto/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Heyan_Meet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heyan_Meet.debug.xcconfig"; path = "Target Support Files/Pods-Heyan_Meet/Pods-Heyan_Meet.debug.xcconfig"; sourceTree = "<group>"; };
+		40436B979F004F02B48DFC37 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../assets/fonts/Roboto/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
+		4DEF11FD50EF475B957822C1 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../assets/fonts/Roboto/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
+		515E5F3C590A4AADB0399927 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../assets/fonts/Roboto/Roboto-Italic.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Heyan_Meet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heyan_Meet.release.xcconfig"; path = "Target Support Files/Pods-Heyan_Meet/Pods-Heyan_Meet.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Heyan_Meet-Heyan_MeetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heyan_Meet-Heyan_MeetTests.debug.xcconfig"; path = "Target Support Files/Pods-Heyan_Meet-Heyan_MeetTests/Pods-Heyan_Meet-Heyan_MeetTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Heyan_Meet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Heyan_Meet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		72AD1931692F4EC0928FC509 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../assets/fonts/Roboto/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
+		75297F6E89DE422897660440 /* PoiretOne-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PoiretOne-Regular.ttf"; path = "../assets/fonts/PoiretOne/PoiretOne-Regular.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Heyan_Meet/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Heyan_Meet-Heyan_MeetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heyan_Meet-Heyan_MeetTests.release.xcconfig"; path = "Target Support Files/Pods-Heyan_Meet-Heyan_MeetTests/Pods-Heyan_Meet-Heyan_MeetTests.release.xcconfig"; sourceTree = "<group>"; };
+		9FC4F2E66B9A40608C8046A3 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		C0589A33FAD04EC8B712E02E /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../assets/fonts/Roboto/Roboto-Black.ttf"; sourceTree = "<group>"; };
+		C595B7E4B0DD464BA412AD05 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto/Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		E7EF219E75D144A6B74F0735 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../assets/fonts/Roboto/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F3C469F0AF0042349C5FC991 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../assets/fonts/Roboto/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
+		FF0EE797994845FAA35F2228 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../assets/fonts/Roboto/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +148,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				8DC6F1D1BBAF44EABD5C627F /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -135,6 +162,26 @@
 				00E356EE1AD99517003FC87E /* Heyan_MeetTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8DC6F1D1BBAF44EABD5C627F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C0589A33FAD04EC8B712E02E /* Roboto-Black.ttf */,
+				72AD1931692F4EC0928FC509 /* Roboto-BlackItalic.ttf */,
+				00AB3B531505479BB1C29B8D /* Roboto-Bold.ttf */,
+				E7EF219E75D144A6B74F0735 /* Roboto-BoldItalic.ttf */,
+				515E5F3C590A4AADB0399927 /* Roboto-Italic.ttf */,
+				1CBDC2EFF69F40A5A485DE1E /* Roboto-Light.ttf */,
+				F3C469F0AF0042349C5FC991 /* Roboto-LightItalic.ttf */,
+				C595B7E4B0DD464BA412AD05 /* Roboto-Medium.ttf */,
+				40436B979F004F02B48DFC37 /* Roboto-MediumItalic.ttf */,
+				9FC4F2E66B9A40608C8046A3 /* Roboto-Regular.ttf */,
+				FF0EE797994845FAA35F2228 /* Roboto-Thin.ttf */,
+				4DEF11FD50EF475B957822C1 /* Roboto-ThinItalic.ttf */,
+				75297F6E89DE422897660440 /* PoiretOne-Regular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -244,6 +291,19 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				0667E5A08B604B26BEEE4B37 /* Roboto-Black.ttf in Resources */,
+				51DA3C48215443CCA45E1794 /* Roboto-BlackItalic.ttf in Resources */,
+				71012FB7A39A424EA78F988D /* Roboto-Bold.ttf in Resources */,
+				6C33DE260C1146378D7C1056 /* Roboto-BoldItalic.ttf in Resources */,
+				05A7CD57678F41499E475982 /* Roboto-Italic.ttf in Resources */,
+				29955D2AA63A44D2BF97789E /* Roboto-Light.ttf in Resources */,
+				3026B01175E647B8A4BC2B04 /* Roboto-LightItalic.ttf in Resources */,
+				B05682C700184168B5E34677 /* Roboto-Medium.ttf in Resources */,
+				2660326FBE2240FC88A046A2 /* Roboto-MediumItalic.ttf in Resources */,
+				CE9A2E25FF044E97954B268B /* Roboto-Regular.ttf in Resources */,
+				953567E22A93420CB6264CEE /* Roboto-Thin.ttf in Resources */,
+				751C0B70131D45A99ACE93EA /* Roboto-ThinItalic.ttf in Resources */,
+				35F4D06D3774449D970B1CBA /* PoiretOne-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +491,7 @@
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-Heyan_Meet-Heyan_MeetTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7NDK9CS2KT;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -459,6 +520,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 7NDK9CS2KT;
 				INFOPLIST_FILE = Heyan_MeetTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -482,14 +544,20 @@
 			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-Heyan_Meet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7NDK9CS2KT;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Heyan_Meet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -497,6 +565,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Heyan_Meet;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Heyan_Meet(Dev)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -508,13 +578,19 @@
 			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-Heyan_Meet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7NDK9CS2KT;
 				INFOPLIST_FILE = Heyan_Meet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -522,6 +598,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Heyan_Meet;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Heyan_Meet(Dev)";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

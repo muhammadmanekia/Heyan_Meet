@@ -1,112 +1,89 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import type {Node} from 'react';
 import {
+  Keyboard,
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
+  TouchableWithoutFeedback,
   View,
+  KeyboardAvoidingView,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Amplify} from 'aws-amplify';
+import awsconfig from './src/aws-exports';
+import {withAuthenticator} from 'aws-amplify-react-native';
+import Auth from './src/Auth/Auth';
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+import Navigation from './src/Navigation/Navigation';
+import SignInScreen from './src/Screens/AuthScreens/SignInScreen/SignInScreen';
+
+Amplify.configure(awsconfig);
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.style = {fontFamily: 'Roboto'};
+
+function App() {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <Navigation />
+        {/* <Auth /> */}
+        {/* <SignInScreen /> */}
+        <StatusBar style="auto" />
+      </View>
+    </TouchableWithoutFeedback>
   );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+}
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    // paddingVertical: 50,
   },
 });
+
+const signUpConfig = {
+  hideAllDefaults: true,
+  signUpFields: [
+    {
+      label: 'Full Name',
+      key: 'name',
+      required: true,
+      displayOrder: 1,
+      type: 'string',
+    },
+    {
+      label: 'Username',
+      key: 'username',
+      required: true,
+      displayOrder: 2,
+      type: 'string',
+    },
+    {
+      label: 'Email',
+      key: 'email',
+      required: true,
+      displayOrder: 3,
+      type: 'string',
+    },
+    {
+      label: 'User Type',
+      key: 'gender',
+      required: true,
+      displayOrder: 4,
+      gender: true,
+    },
+    {
+      label: 'Password',
+      key: 'password',
+      required: true,
+      displayOrder: 5,
+      type: 'password',
+    },
+  ],
+};
 
 export default App;

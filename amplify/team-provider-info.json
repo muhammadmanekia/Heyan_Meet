@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-heyanmeet-dev-130937-authRole",
+      "UnauthRoleArn": "arn:aws:iam::613662591631:role/amplify-heyanmeet-dev-130937-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::613662591631:role/amplify-heyanmeet-dev-130937-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-heyanmeet-dev-130937-deployment",
+      "UnauthRoleName": "amplify-heyanmeet-dev-130937-unauthRole",
+      "StackName": "amplify-heyanmeet-dev-130937",
+      "StackId": "arn:aws:cloudformation:us-east-1:613662591631:stack/amplify-heyanmeet-dev-130937/d9cf3360-8099-11ed-94fc-1234973eb8a7",
+      "AmplifyAppId": "dwc0gxuzyacf8"
+    },
+    "categories": {
+      "auth": {
+        "HeyanMeet": {}
+      },
+      "storage": {
+        "s3heyanmeetstorageabe89cc9": {}
+      },
+      "api": {
+        "HeyanMeet": {}
+      }
+    }
+  }
+}

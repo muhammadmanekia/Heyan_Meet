@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3heyanmeetstorageabe89cc9",
+  "bucketName": "heyanmeet-storage-abe89cc9",
+  "policyUUID": "6ad5ca0e",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}
