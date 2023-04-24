@@ -30,6 +30,7 @@ const EventDetails = ({
         value={formikProps.values.title}
         onChangeText={formikProps.handleChange('title')}
         placeholder="Event Title"
+        placeholderTextColor="rgba(0,0,0, 0.4)"
       />
       <View
         style={{flexDirection: 'row', flexWrap: 'wrap', alignSelf: 'center'}}>
@@ -67,6 +68,7 @@ const EventDetails = ({
         placeholder="Location"
         onChangeText={formikProps.handleChange('streetAddress')}
         value={formikProps.values.location}
+        placeholderTextColor="rgba(0,0,0, 0.4)"
       />
       <TextInput
         style={styles.descriptionInput}
@@ -76,6 +78,7 @@ const EventDetails = ({
         value={formikProps.values.description}
         onChangeText={formikProps.handleChange('description')}
         placeholder="Description"
+        placeholderTextColor="rgba(0,0,0, 0.4)"
       />
       <Pressable onPress={onImageLibraryPress} style={styles.button}>
         <Image
@@ -93,6 +96,7 @@ const EventDetails = ({
             value={formikProps.values.paymentAmount + ''}
             placeholder="$"
             keyboardType="numeric"
+            placeholderTextColor="rgba(0,0,0, 0.4)"
           />
         ) : (
           <Pressable onPress={() => setPaymentInput(!paymentInput)}>
